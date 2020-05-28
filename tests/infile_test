@@ -1,0 +1,36 @@
+diameter=45e-9
+particle_number=37
+box_size=1.4e-6
+dt=5.5e-10
+magnetic=true
+magnetic_type=ferro
+Bz = 0.3
+By=0.2
+Bx=0.1
+#Bx = 0.4
+start_height=5.4e-7
+interaction_length=0.8e-6
+alignment_field_strength=1e-5
+charge = 0.0
+temperature = -230
+E = -200e3
+
+n_substrate = 1.1
+n_gas = 1.05
+mean_free_path = 60e-9
+particle_susceptibility = -5e-5
+density   = 1000
+
+
+m_saturation	 = 	1500
+	diameter_std = 5e-9
+ diameter_std2 = 10e-9
+
+	double_charge_fraction = 0.9
+
+print_trajectory = False
+remove_surface_charge=false
+
+
+dielectric_substrate=4
+dielectric_gas=0.75

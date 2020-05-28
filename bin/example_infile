@@ -1,0 +1,9 @@
+diameter = 30.000000e-9
+particle_number = 100
+box_size = 1.0e-6
+dt = 10.0e-10
+magnetic = true
+magnetic_type = ferro
+Bz = 0.6
+start_height = 250e-9
+interaction_length = 1.0e-6

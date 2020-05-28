@@ -1,0 +1,20 @@
+\mathbf{E} = 
+\begin{bmatrix}
+3E_0r_p^3\frac{xz}{r^5} + \frac{q_2e}{4\pi\epsilon_0\epsilon_3}\frac{x}{r^3} \\
+3E_0r_p^3\frac{yz}{r^5} + \frac{q_2e}{4\pi\epsilon_0\epsilon_3}\frac{y}{r^3}\\
+-r_p^3E_0\left( \frac{x^2+y^2-2z^2}{r^5} \right) + \frac{q_2e}{4\pi\epsilon_0\epsilon_3}\frac{z}{r^3}
+\end{bmatrix}
+
+\mathbf{F}=-\frac{(q_1e)^2}{4\pi\epsilon_0\epsilon_3(2S_1)^2}\frac{\epsilon_2-\epsilon_3}{\epsilon_2+\epsilon_3}\mathbf{n}
+
+\mathbf{F} = \frac{q_1e^2}{S_2^34\pi\epsilon_0 \epsilon_3 } \left( q_2S_2 - \frac{q_1d_{p2}^3(8S_2^2-d_{p2}^2)}{2(4S_2^2-d_{p2}^2)^2}\right )\mathbf{m}-\frac{q_2e^2}{S_2^34\pi\epsilon_0 \epsilon_3 } \left( q_1S_2 - \frac{q_2d_{p1}^3(8S_2^2-d_{p1}^2)}{2(4S_2^2-d_{p1}^2)^2}\right )\mathbf{m}
+
+\mathbf{F}=4\pi\epsilon_0\epsilon_3r_p^3\mathbf{E}\cdot \nabla \mathbf{E}
+
+\mathbf{F}=-\frac{2A_H}{3}\frac{r_p^3}{S^2_3(S_3+2r_p)^2}\mathbf{n}
+
+\mathbf{F} = -\frac{32A_H}{3} \frac{r_{p1}^3r_{p2}^3(r_{p1}+r_{p2}+S)}{S^2(2r_{p1}+s)^2(2r_{p2}+S)^2(2r_{p1}+2r_{p2}+S)^2}\mathbf{m}
+
+\mathbf{F}(\mathbf{r})=\frac{3\mu_0}{4\pi|\bar{r}|^5}\left( (\mathbf{m_p}\cdot\mathbf{\bar{r}})\mathbf{m} + (\mathbf{m}\cdot\mathbf{\bar{r}})\mathbf{m_p} + (\mathbf{m_p}\cdot\mathbf{m})\mathbf{\bar{r}} -\frac{5(\mathbf{m_p}\cdot\mathbf{\bar{r}})(\mathbf{m}\cdot\mathbf{\bar{r}})}{|\bar{r}|^2}\mathbf{\bar{r}} \right ),\ \ \mathbf{\bar{r}}=\mathbf{r_1}-\mathbf{r_2}
+
+\mathbf{H}_{\text{dipole}}(\mathbf{r})=\frac{1}{4\pi}\left ( \frac{3\mathbf{r}(\mathbf{r}\cdot\mathbf{m})}{|r|^5}-\frac{\mathbf{m}}{|r|^3}\right )
