@@ -14,7 +14,7 @@ default: main
 all: $(PROGRAMS)
 
 main: main.o $(OBJECTS)
-	$(CXX) $(CXXFLAGS)  -o ../bin/Sim main.o $(OBJECTS) 
+	$(CXX) $(CXXFLAGS)  -o ../bin/AeroDep main.o $(OBJECTS) 
 tests: ../tests/tests.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o ../tests/tests ../tests/tests.o $(OBJECTS) 
 
@@ -22,4 +22,4 @@ docs:
 	doxygen ../docs/doxygen_config
 
 clean: 
-	rm -f *.o ../tests/*.o ../bin/Sim ../tests/tests
+	rm -f *.o ../tests/*.o ../bin/AeroDep ../tests/tests
