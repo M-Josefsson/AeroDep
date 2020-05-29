@@ -10,15 +10,16 @@
 #include "vector_operations.hpp"
 
 #include <cmath>
-#include <omp.h>
+//#include <omp.h>
 #include <algorithm> //std::min
 
 #include <iostream>
 
 using std::vector;
 
-#pragma omp declare reduction(vector3plus: vector3: omp_out = omp_out + omp_in)
-#pragma omp declare reduction(Jacobianplus: Jacobian: omp_out = omp_out + omp_in)
+//Uncomment for parellelized code
+//#pragma omp declare reduction(vector3plus: vector3: omp_out = omp_out + omp_in)
+//#pragma omp declare reduction(Jacobianplus: Jacobian: omp_out = omp_out + omp_in)
 
 /*! 
 * @brief Returns the total external force acting on the particle.
@@ -42,11 +43,11 @@ vector3 Get_total_force(Particle& particle, const vector<Particle>& frozen_parti
     gradient_E_field.fill(0.0);
     vector3 E_field{0.0, 0.0, data.E0}, H_field_dipoles{0.0, 0.0, 0.0}, F_ext{0.0, 0.0, 0.0};    
 
+    //Uncomment for parellelized code  
     //Determine how many threads to use. Based on empirical testing.
-    int N = std::min(static_cast<int> ((frozen_particles.size()+2500-1) / 2500), omp_get_max_threads());  
-
-    #pragma omp parallel for if (frozen_particles.size()>3000) shared(frozen_particles, data) firstprivate(particle) num_threads(N) \
-    reduction(vector3plus: F_ext, E_field, H_field_dipoles) reduction(Jacobianplus: gradient_E_field)    
+    //int N = std::min(static_cast<int> ((frozen_particles.size()+2500-1) / 2500), omp_get_max_threads());  
+    //#pragma omp parallel for if (frozen_particles.size()>3000) shared(frozen_particles, data) firstprivate(particle) num_threads(N) \
+    // reduction(vector3plus: F_ext, E_field, H_field_dipoles) reduction(Jacobianplus: gradient_E_field)    
 
     for (size_t i = 0; i< frozen_particles.size() ; ++i ){
 

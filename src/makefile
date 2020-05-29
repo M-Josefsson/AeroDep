@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -g -std=c++11 -ffast-math -O2 -Wall -Wextra -pedantic-errors -Wold-style-cast -fopenmp
+CXXFLAGS = -g -std=c++11 -ffast-math -O2 -Wall -Wextra -pedantic-errors -Wold-style-cast
 
 PROGRAMS = main tests
 
