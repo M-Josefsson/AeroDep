@@ -12,7 +12,7 @@ public:
     Deposition(const InputData& data);
     bool Add_particle(ostream& os, const InputData& data);
     void Add_input_particles(const std::vector<std::array<double, 7>>& input_particles, const InputData& data, ostream& os);
-    void Print_final_positions(const std::string& filename, std::ostream& os);
+    void Print_final_positions(const std::string& filename, std::ostream& os, bool magnetic);
     void Finalize(std::ostream& os);
 
     friend int test_deposition(Deposition deposition);
@@ -25,7 +25,7 @@ private:
     double Mobility(const double& d1, const double& mfp, const double& Z);
     double Double_charge_diameter(double diameter, double mfp);
     double Get_diameter(double& current_q, const double& double_charge_fraction);
-    void print_trajectory(std::vector<vector3> Pos, std::vector<vector3> magnetization);
+    void print_trajectory(std::vector<vector3> Pos, std::vector<vector3> magnetization, bool magnetic);
 
     std::vector<Particle> frozen_particles;
     bool rand_size, rand_size2, double_charge;

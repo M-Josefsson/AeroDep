@@ -151,7 +151,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     }
     
     if (data.print_trajectory){
-        print_trajectory(Pos, magnetization);   
+        print_trajectory(Pos, magnetization, data.calcMagnetic);   
     }
 
     frozen_particles.push_back(P);
@@ -168,7 +168,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
 * @param Pos vector of vector3 containing the positions at all time steps for the current particle.
 * @param magnetization vector of vector3 containing the magnetization at all time steps for the current particle.
 */
-void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization){
+void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization, bool magnetic){
     std::ofstream file;
     string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
     file.open(path);
@@ -179,9 +179,12 @@ void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetiza
 
     for(size_t i=0; i<Pos.size(); ++i){            
         file << Pos[i][0] << "\t" << Pos[i][1] << "\t" << Pos[i][2] << "\t";
-        file << magnetization[i][0] << "\t";
-        file << magnetization[i][1] << "\t";
-        file << magnetization[i][2] << endl;          
+        if (magnetic){
+            file << magnetization[i][0] << "\t";
+            file << magnetization[i][1] << "\t";
+            file << magnetization[i][2];          
+        }
+        file << endl;
     }
 
     file.close();
@@ -328,7 +331,7 @@ void Deposition::Update_z_start(ostream& os){
 * @param filename The name of the file where the final positions will be printed.
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 */
-void Deposition::Print_final_positions(const string& filename, ostream& os){
+void Deposition::Print_final_positions(const string& filename, ostream& os, bool magnetic){
     std::ofstream file;
     file.open(filename);
 
@@ -341,10 +344,13 @@ void Deposition::Print_final_positions(const string& filename, ostream& os){
         file << frozen_particles[i].pos[0] << "\t"; 
         file << frozen_particles[i].pos[1] << "\t";
         file << frozen_particles[i].pos[2] << "\t";
-        file << frozen_particles[i].magnetization[0] << "\t"; 
-        file << frozen_particles[i].magnetization[1] << "\t";
-        file << frozen_particles[i].magnetization[2] << "\t";
-        file << frozen_particles[i].diameter << endl;
+        if (magnetic){
+            file << frozen_particles[i].magnetization[0] << "\t"; 
+            file << frozen_particles[i].magnetization[1] << "\t";
+            file << frozen_particles[i].magnetization[2] << "\t";
+            file << frozen_particles[i].diameter;
+        }
+        file << endl;
     }
 
     file.close();

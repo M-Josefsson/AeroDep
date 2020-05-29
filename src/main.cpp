@@ -78,10 +78,10 @@ int main(int argc, char *argv[]){
         if (!cont) continue;
 
         if (i%50 == 0 ) {
-            deposition.Print_final_positions(outfile, os);
+            deposition.Print_final_positions(outfile, os, data.calcMagnetic);
         }            
     }
 
-    deposition.Print_final_positions(outfile, os);
+    deposition.Print_final_positions(outfile, os, data.calcMagnetic);
     deposition.Finalize(os);    
 }

@@ -316,6 +316,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
 
     cout << "Total_force (2/4): ";
     fp.push_back(p2);
+    data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
     c += !test_close_arr({0.0, 0.0, -3.56073056367610112e-14}, t);
 
@@ -325,6 +326,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     fp.push_back(p3);
     
     cout << "Total_force (3/4): ";
+    data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
     c += !test_close_arr({-2.09593118157761916e-15, -8.38372472631047666e-15, -2.51885253754563962e-14}, t);
 
@@ -443,7 +445,7 @@ int test_inputreader_default(){
 
     if(data.print_trajectory){ cout << "print_trajectory is true, expected false" << endl; c += 1;}
     if(!data.remove_surface_charge){ cout << "remove_surface_charge is false, expected true"<< endl; c += 1;}
-    if(data.calcMagnetic){ cout << "magnetic is true, expected false"<< endl; c += 1;}
+    if(!data.calcMagnetic){ cout << "magnetic is false, expected true"<< endl; c += 1;}
     if(!data.magnetic_ferro){ cout << "magnetic_ferro is false, expected true"<< endl;c += 1;}
 
     cout << c << " errors found. " << endl;    
