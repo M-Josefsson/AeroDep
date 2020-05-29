@@ -84,8 +84,8 @@ void Particle::Set_initial_conditions(const double& T, const vector3& v_g, const
 * @brief Make a forward timestep
 *
 * Make a forward by timestep increasing time with dt (Euler's method) using the Chandrasekar procedure for particle motion including
-* Brownian motion. This routine is based on the one described in the appendix of Zarutskaya and Shapiro JoAS 31, 907 (2000). After the time step dt it checks
-* wether the particle has collided with the substrate or another particle.
+* Brownian motion. This routine is based on the one described in the appendix of Zarutskaya and Shapiro JoAS 31, 907 (2000).
+* After the time step dt it checks whether the particle has collided with the substrate or another particle.
 *
 * @param data Data sutrcture containing the user input data and environment data.
 * @param frozen_particles Vector containing the already deposited (frozen) particles.
@@ -159,36 +159,35 @@ void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
 *
 * @return True is the particle has collided with something, otherwise false.
 */      
-bool Particle::Check_collision(const vector<Particle>& frozen_particles, const bool& remove_surface_charge, const double& control_l, ostream& os){
+bool Particle::Check_collision( const vector<Particle>& frozen_particles, 
+                                const bool& remove_surface_charge, 
+                                const double& control_l, ostream& os){
     double dist;
     vector3 p_to_p{0.0, 0.0, 0.0}, frozen_pos{0.0, 0.0, 0.0};
 
-    
-    for (size_t i = 0; i < frozen_particles.size(); ++i){
-        const Particle* frozen_particle = &frozen_particles[i];
+    for (auto &frozen_particle : frozen_particles){
 
-        if(fabs(frozen_particle->pos[2]-pos[2]) < (frozen_particle->diameter/2.0 + diameter/2.0)*1.2 ){
-            frozen_pos[2] = frozen_particle->pos[2];
+        if(fabs(frozen_particle.pos[2]-pos[2]) < (frozen_particle.diameter/2.0 + diameter/2.0)*1.5 ){
+            frozen_pos[2] = frozen_particle.pos[2];
             //Include particles in neighbouring boxes
 
             for(double x_offset : {-1,0,1}){ 
                 for(double y_offset : {-1,0,1}){ 
                 
-                    frozen_pos[0] = frozen_particle->pos[0] + x_offset*control_l;
-                    frozen_pos[1] = frozen_particle->pos[1] + y_offset*control_l;                
+                    frozen_pos[0] = frozen_particle.pos[0] + x_offset*control_l;
+                    frozen_pos[1] = frozen_particle.pos[1] + y_offset*control_l;                
 
                     p_to_p = pos - frozen_pos;
                     dist = norm(p_to_p);                
                     
-                    if(dist < diameter*0.5 + frozen_particle->diameter*0.5 + MIN_DIST){
+                    if(dist < diameter*0.5 + frozen_particle.diameter*0.5 + MIN_DIST){
+
                         frozen = true;
                         collision_object = 'p';
                         os << "Collided with a Particle - Distance between particles: " << dist << endl;
                         os << "Steps: " << iteration << endl;
 
-                        if(remove_surface_charge){
-                            q = 0;                          
-                        }
+                        if(remove_surface_charge) q = 0;                        
                         return frozen;                        
                     }            
                 }            
@@ -203,9 +202,7 @@ bool Particle::Check_collision(const vector<Particle>& frozen_particles, const b
         os << "Collided with the substrate - Distance to substrate : " << pos[2] << endl;
         os << "Steps: " << iteration << endl;
 
-        if(remove_surface_charge){
-            q = 0;            
-        }        
+        if(remove_surface_charge) q = 0;       
     }
     return frozen;
 }

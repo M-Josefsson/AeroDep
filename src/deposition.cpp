@@ -21,6 +21,7 @@
 #include <ctime>   //time(0)
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 using std::vector;
 using std::ostream;
@@ -150,23 +151,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     }
     
     if (data.print_trajectory){
-        std::ofstream file;
-        string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
-        file.open(path);
-
-        if (!file.is_open()){
-            os << "Error: Could not open " << path << ". Does the dir exist? " << endl;
-            return false;
-        }
-
-        for(size_t i=0; i<Pos.size(); ++i){            
-            file << Pos[i][0] << "\t" << Pos[i][1] << "\t" << Pos[i][2] << "\t";
-            file << magnetization[i][0] << "\t";
-            file << magnetization[i][1] << "\t";
-            file << magnetization[i][2] << endl;          
-        }
-
-        file.close();
+        print_trajectory(Pos, magnetization);   
     }
 
     frozen_particles.push_back(P);
@@ -175,6 +160,32 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     return true;
 }
 
+/*!
+*
+* @brief Prints the contents of Pos and magnetization to the file "./trajectories/particle_N"
+* where N is the current particle number.
+*
+* @param Pos vector of vector3 containing the positions at all time steps for the current particle.
+* @param magnetization vector of vector3 containing the magnetization at all time steps for the current particle.
+*/
+void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization){
+    std::ofstream file;
+    string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
+    file.open(path);
+
+    if (!file.is_open()){
+        throw std::invalid_argument( "Error: Could not open " + path + ". Does the dir exist? " );
+    }
+
+    for(size_t i=0; i<Pos.size(); ++i){            
+        file << Pos[i][0] << "\t" << Pos[i][1] << "\t" << Pos[i][2] << "\t";
+        file << magnetization[i][0] << "\t";
+        file << magnetization[i][1] << "\t";
+        file << magnetization[i][2] << endl;          
+    }
+
+    file.close();
+}
 
 /*!
 *

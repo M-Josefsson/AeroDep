@@ -25,6 +25,7 @@ private:
     double Mobility(const double& d1, const double& mfp, const double& Z);
     double Double_charge_diameter(double diameter, double mfp);
     double Get_diameter(double& current_q, const double& double_charge_fraction);
+    void print_trajectory(std::vector<vector3> Pos, std::vector<vector3> magnetization);
 
     std::vector<Particle> frozen_particles;
     bool rand_size, rand_size2, double_charge;
