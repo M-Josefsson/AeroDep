@@ -53,7 +53,7 @@ struct InputData {
 
     bool print_trajectory {false}; /*!< Print trahectories for every particle?*/
     bool remove_surface_charge {true}; /*!< Remove particle charge upon collision?*/
-    bool calcMagnetic {false}; /*!< Include magnetif forces?*/
+    bool calcMagnetic {true}; /*!< Include magnetif forces?*/
     bool magnetic_ferro {true}; /*!< Use F_ferro over F_para?*/  
 
     double AH131;
