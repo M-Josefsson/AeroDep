@@ -18,7 +18,7 @@ trajectories for small nanoparticles.
 The core of the program builds upon the work in:
 Krinke et al. "[Microscopic aspects of the deposition of nanoparticles from the gas phase](https://doi.org/10.1016/S0021-8502(02)00074-5)." Journal of Aerosol Science 33.10 (2002), but with added functionality (such as magnetism).
 
-The integration scheme is described in ["Capture of nanoparticles by magnetic filters."](https://doi.org/10.1016/S0021-8502(99)00567-4)  Journal of Aerosol Science 31.8 (2000).
+The integration scheme is described in Zarutskaya and Shapiro ["Capture of nanoparticles by magnetic filters."](https://doi.org/10.1016/S0021-8502(99)00567-4)  Journal of Aerosol Science 31.8 (2000).
 
 
 ### Installation and requirements 
