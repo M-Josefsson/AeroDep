@@ -22,11 +22,11 @@
 /*!
 *
 * @mainpage 
-* This program performs molecular dynamics-type calculations in order to simulate the final steps of the depositon process 
-* of (magnetic) nanoparticles in an aerosol phase onto an substrate. The particle concentration in the 
-* gas is assumed to be very low such that only one particle is in the aerosol phase in the simulation volume at any given
-* time. When the particle collides with the substrate, or another particle, its properties (such as position and magnetization)
-* are frozen, adna a new particle is spawned.
+* This program performs molecular dynamics-type calculations in order to simulate the final steps of the
+* depositon process of (magnetic) nanoparticles in an aerosol phase onto an substrate. The particle 
+* concentration in the gas is assumed to be very low such that only one particle is in the aerosol phase in
+* the simulation volume at any given time. When the particle collides with the substrate, or another 
+* particle, its properties (such as position and magnetization) are frozen, and a new particle is spawned.
 *
 * The calculations are based on Euler's method for solving Newton's force equation by taking many small successive 
 * time steps. The forces included are of electrostratic, magnetic, and van der Waals nature. Interactions between the frozen 
@@ -34,9 +34,10 @@
 * stochastic motion governed by Brownian motion is included as it has a significat effect on the particles' 
 * trajectories for small nano particles.
 * 
-* The core of the program builds upon the work in:\n 
-* Krinke et al. "Microscopic aspects of the deposition of nanoparticles from the gas phase." Journal of Aerosol Science 33.10 (2002)
-* \n but with added functionality (such as magnetism).
+* AeroDep is mainly meant to be used as a standalone program, but its different source code parts can
+* also be used on their own in other projects. This documentations aims describing the idivdual parts of 
+* the code, as well as for lowering the bar for understanding the machinery behind the program.
+*
 */
 
 int main(int argc, char *argv[]){
@@ -78,10 +79,10 @@ int main(int argc, char *argv[]){
         if (!cont) continue;
 
         if (i%50 == 0 ) {
-            deposition.Print_final_positions(outfile, os, data.calcMagnetic);
+            deposition.Print_final_positions(outfile, os);
         }            
     }
 
-    deposition.Print_final_positions(outfile, os, data.calcMagnetic);
+    deposition.Print_final_positions(outfile, os);
     deposition.Finalize(os);    
 }

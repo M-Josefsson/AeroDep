@@ -151,7 +151,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     }
     
     if (data.print_trajectory){
-        print_trajectory(Pos, magnetization, data.calcMagnetic);   
+        print_trajectory(Pos, magnetization);   
     }
 
     frozen_particles.push_back(P);
@@ -160,35 +160,6 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     return true;
 }
 
-/*!
-*
-* @brief Prints the contents of Pos and magnetization to the file "./trajectories/particle_N"
-* where N is the current particle number.
-*
-* @param Pos vector of vector3 containing the positions at all time steps for the current particle.
-* @param magnetization vector of vector3 containing the magnetization at all time steps for the current particle.
-*/
-void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization, bool magnetic){
-    std::ofstream file;
-    string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
-    file.open(path);
-
-    if (!file.is_open()){
-        throw std::invalid_argument( "Error: Could not open " + path + ". Does the dir exist? " );
-    }
-
-    for(size_t i=0; i<Pos.size(); ++i){            
-        file << Pos[i][0] << "\t" << Pos[i][1] << "\t" << Pos[i][2] << "\t";
-        if (magnetic){
-            file << magnetization[i][0] << "\t";
-            file << magnetization[i][1] << "\t";
-            file << magnetization[i][2];          
-        }
-        file << endl;
-    }
-
-    file.close();
-}
 
 /*!
 *
@@ -331,7 +302,7 @@ void Deposition::Update_z_start(ostream& os){
 * @param filename The name of the file where the final positions will be printed.
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 */
-void Deposition::Print_final_positions(const string& filename, ostream& os, bool magnetic){
+void Deposition::Print_final_positions(const string& filename, ostream& os){
     std::ofstream file;
     file.open(filename);
 
@@ -344,12 +315,41 @@ void Deposition::Print_final_positions(const string& filename, ostream& os, bool
         file << frozen_particles[i].pos[0] << "\t"; 
         file << frozen_particles[i].pos[1] << "\t";
         file << frozen_particles[i].pos[2] << "\t";
-        if (magnetic){
-            file << frozen_particles[i].magnetization[0] << "\t"; 
-            file << frozen_particles[i].magnetization[1] << "\t";
-            file << frozen_particles[i].magnetization[2] << "\t";
-            file << frozen_particles[i].diameter;
-        }
+        file << frozen_particles[i].magnetization[0] << "\t"; 
+        file << frozen_particles[i].magnetization[1] << "\t";
+        file << frozen_particles[i].magnetization[2] << "\t";
+        file << frozen_particles[i].diameter;
+
+        file << endl;
+    }
+
+    file.close();
+}
+
+/*!
+*
+* @brief Prints the contents of Pos and magnetization to the file "./trajectories/particle_N"
+* where N is the current particle number.
+*
+* @param Pos vector of vector3 containing the positions at all time steps for the current particle.
+* @param magnetization vector of vector3 containing the magnetization at all time steps for the current particle.
+*/
+void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization){
+    std::ofstream file;
+    string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
+    file.open(path);
+
+    if (!file.is_open()){
+        throw std::invalid_argument( "Error: Could not open " + path + ". Does the dir exist? " );
+    }
+
+    for(size_t i=0; i<Pos.size(); ++i){            
+        file << Pos[i][0] << "\t";
+        file << Pos[i][1] << "\t";
+        file << Pos[i][2] << "\t";
+        file << magnetization[i][0] << "\t";
+        file << magnetization[i][1] << "\t";
+        file << magnetization[i][2];          
         file << endl;
     }
 
@@ -371,7 +371,7 @@ void Deposition::Finalize(ostream& os){
             s_count++;
         }
     }
-    os << "Particles generated: " << frozen_particles.size() << endl;
+    os << "Total number of particles: " << frozen_particles.size() << endl;
     os << "Particles collided with substrate: " << s_count << endl;
     os << "Particles collided with other Particle: " << p_count << endl;
 }

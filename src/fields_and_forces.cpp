@@ -24,9 +24,6 @@ using std::vector;
 *
 * The total force includes all two particle forces and all forces between the incoming particle and its surroundings, 
 * such as the force due to interactions with the substrate or the external electric field. \n                 
-* 
-* The summation over frozen particles is parallelized for large particle numbers where one additional thread
-* is used for every 2500 particles in frozen_particles.
 *
 * @param particle The incoming particle
 * @param frozen_particles Vector containing the already deposited (frozen) particles.
