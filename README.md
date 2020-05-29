@@ -41,7 +41,7 @@ All available keys are (default values within parenthesis):
 - **particle_number** - total number of particles in the deposition (100)
 - **diameter** - particle diameter in m (30e-9)
 - **start_height** - distance between a newly generated particle and the highest frozen particle or substrate in m (150e-9)
-- **temperature** - Chamber/gas temperature in K(300)
+- **temperature** - chamber/gas temperature in K (300)
 - **box_size** - side-length of the simulation box in m (1e-6)
 - **charge** - charge of the new particles in elementary charges (-1.0)
 - **density** - the particle's density in kg/m3 (7310.0)
