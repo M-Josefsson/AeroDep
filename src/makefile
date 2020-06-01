@@ -3,7 +3,7 @@ CXXFLAGS = -g -std=c++11 -ffast-math -O2 -Wall -Wextra -pedantic-errors -Wold-st
 
 PROGRAMS = main tests
 
-OBJECTS = deposition.o particle.o vector_extensions.o inputreader.o fields_and_forces.o
+OBJECTS = deposition.o particle.o vector_operations.o inputreader.o fields_and_forces.o
 
 .DEFAULT_GOAL := default
 

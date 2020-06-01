@@ -334,7 +334,7 @@ void Deposition::Print_final_positions(const string& filename, ostream& os){
 * @param Pos vector of vector3 containing the positions at all time steps for the current particle.
 * @param magnetization vector of vector3 containing the magnetization at all time steps for the current particle.
 */
-void Deposition::print_trajectory(vector<vector3> Pos, vector<vector3> magnetization){
+void Deposition::print_trajectory(const vector<vector3>& Pos, const vector<vector3>& magnetization){
     std::ofstream file;
     string path = "./trajectories/particle_" + std::to_string(frozen_particles.size());
     file.open(path);

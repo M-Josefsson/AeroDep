@@ -3,7 +3,7 @@
 * @brief This file contains linear algebra vector operations. 
 */
 
-#include "vector_extensions.hpp"
+#include "vector_operations.hpp"
 
 #include <assert.h>
 #include <algorithm> //transform

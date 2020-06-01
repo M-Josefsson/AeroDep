@@ -14,7 +14,7 @@
 */
 
 #include "particle.hpp"
-#include "vector_extensions.hpp"
+#include "vector_operations.hpp"
 #include "fields_and_forces.hpp"
 #include "constants.hpp"
 
