@@ -1,7 +1,11 @@
-/*!
+/*****************************************************************************************************//**
 * @file 
+*
 * @brief This file contains linear algebra vector operations. 
-*/
+*
+*********************************************************************************************************/
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "vector_operations.hpp"
 
@@ -79,3 +83,5 @@ double norm(const vector3& a){
     res = sqrt(res);
     return res;
 }
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */

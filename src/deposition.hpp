@@ -28,10 +28,30 @@ private:
     void print_trajectory(const std::vector<vector3>& Pos, const std::vector<vector3>& magnetization);
 
     std::vector<Particle> frozen_particles;
-    bool rand_size, rand_size2, double_charge;
-    double z_start, z_start_original, AH132, AH131, AH232, diameter, d_p2;
+    //!< @brief Vector containing the frozen (already deposited) particles.
 
-    //std::default_random_engine generator;
+    double z_start;
+    //!< @brief Current start height for new particles.
+
+    double z_start_original;
+    //!< @brief Original start height for new particles.    
+
+    double diameter; 
+    //!< @brief Diameter (or mean diameter if rand_size=True) of single charegd particles.
+
+    double d_p2;
+    //!< @brief Diameter (or mean diameter if rand_size2=True) of double charegd particles.
+
+    bool rand_size;
+    //!< @brief Generate particles according to a Log-norm distribution?
+
+    bool rand_size2;
+    //!< @brief Generate double charged particles according to a Log-norm distribution?
+
+    bool double_charge;
+    //!< @brief Include double charged particles?
+    
+
     std::subtract_with_carry_engine<std::uint_fast64_t, 48, 5, 12> generator;
     std::uniform_real_distribution<double> uniform;
     std::normal_distribution<double> normal;     

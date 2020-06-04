@@ -1,15 +1,18 @@
-/*!
+/*****************************************************************************************************//**
 * @file 
+*
 * @brief This file contains the class InputReader.
-*/
+*
+*********************************************************************************************************/
 
-/*!
+/*****************************************************************************************************//**
 *
 * @class InputReader 
 *
 * @brief This calss is responsible for reading infiles, both containing input/environment parameters
 * as well as frozen (already deposited) particles from a previous run.
-*/
+*
+*********************************************************************************************************/
 
 #include "inputreader.hpp"
 
@@ -27,44 +30,53 @@ using std::string;
 using std::vector;
 using std::array;
 
-/*!
+
+
+/*****************************************************************************************************//**
 *
 * @brief Creates the InputReader object and reads input parameters from the file 'infile'. 
 *
 * First the default values for all variables are loaded. Then those values are overwritten with the
 * corresponding values in the input file. Ignores lines beginning with '#'.
 *
-* @param infile Infile containing deposition parameters. Syntax must be 'key = value' (spaces and tabs are ignored).
+* @param infile Filename of the infile containing deposition parameters. Syntax must be 'key = value' 
+* (spaces and tabs are ignored).
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 *
-*/
-InputReader::InputReader(string infile, std::ostream& os){
+*********************************************************************************************************/
+InputReader::InputReader(const std::string infile, std::ostream& os){
 
     errors = "";    
     ifstream fin( infile, ifstream::in );
     fin.precision( 15 );
     
     if ( ! fin.is_open() ) {
+
       errors += "Unable to open file \"" + infile + "\"\n";
       success = false;
       os << errors << endl;
       return;
+
     }
 
     //Read keys from input file
     string line;
+
     while (getline(fin, line)){
+
         line.erase(std::remove_if (line.begin(), line.end(), ::isblank), line.end());        
         std::for_each (line.begin(), line.end(), ::tolower);
         std::istringstream is_line(line);        
         string key;
 
         if (getline(is_line, key, '=')){
+
             string value;
-            if (key[0] == '#')
-                continue;
+
+            if (key[0] == '#') continue;
 
             if (getline(is_line, value)){
+
                 Read_key(key, value);
                 keys_read++;
             }
@@ -78,10 +90,14 @@ InputReader::InputReader(string infile, std::ostream& os){
     data.SetHamakerConstants();
 }
 
-/*!
-* @brief Reads the value for the key and converts 'value' to the apprioriate data type for key.
-*/
+
+/*****************************************************************************************************//**
+*
+* @brief Reads the value for 'key' and converts 'value' to the apprioriate data type for key.
+*
+*********************************************************************************************************/
 void InputReader::Read_key(const string& key, const string& value){
+
     if (key=="diameter"){
         try{ data.diameter = check_pos(stod(value), key); }catch(...){ Add_error(key, value); }
 
@@ -190,25 +206,31 @@ void InputReader::Read_key(const string& key, const string& value){
     }    
 }
 
-/*!
+
+/*****************************************************************************************************//**
 * @brief Adds errors to the error string.
 *
 * @param key The key in the input file that caused the error.
-* @param value the value in the input file that caused the error.
-*/
+* @param value The value in the input file that caused the error.
+*
+*********************************************************************************************************/
 void InputReader::Add_error(const string& key, const string& value){
+
     errors += "Invalid value " + value + "for key " + key + "\n"; 
     success = false;
     keys_read--;
 }
 
-/*
-* @brief Checks whether the input value is positive. If not an error messade is added to errors.
+
+/*****************************************************************************************************//**
+* @brief Checks whether the input value is positive. If not an error message is added to errors.
 *
 * @param value The value to be checked.
-* @param key The key that is associated iwth the value. Only used in the error message.
-*/
+* @param key The key that is associated with the value. Only used in the error message.
+*
+*********************************************************************************************************/
 double InputReader::check_pos(double value, string key){
+
     if(value < 0.0){
         errors += "Negative value (" + std::to_string(value) + ")  not allowed for key " + key;
     }
@@ -216,7 +238,7 @@ double InputReader::check_pos(double value, string key){
 }
 
 
-/*!
+/*****************************************************************************************************//**
 *
 * @brief Reads already deposited particles from a file.
 *
@@ -226,24 +248,30 @@ double InputReader::check_pos(double value, string key){
 * @param filename The name of the file to be read.
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 *
-* @return A vector of arrays (length 7) where elements 0-2 represent a particle's position, 3-5 its magnetization and element 6 its diameter. 
-*/
+* @return A vector of arrays (length 7) where elements 0-2 represent a particle's position, 
+* 3-5 its magnetization and element 6 its diameter. 
+*
+*********************************************************************************************************/
 vector<array<double, 7>> InputReader::Read_particles(string filename, std::ostream& os){
+
     vector<array<double, 7>> input_particles;        
     double x, y, z, mx, my, mz, d;
-
     errors = "";    
+
     ifstream fin( filename, ifstream::in );
     fin.precision( 15 );
     
     if ( ! fin.is_open() ) {
+
       errors += "Unable to open file \"" + filename + "\"\n";
       success = false;
       os << errors << endl;
       return input_particles;
+
     }
 
     int count = 0;
+
     while ( (fin >> x) && (fin >> y) && (fin >> z) &&
             (fin >> mx) && (fin >> my) && (fin >> mz) &&
             (fin >> d) ){
@@ -273,12 +301,17 @@ vector<array<double, 7>> InputReader::Read_particles(string filename, std::ostre
     return input_particles;
 }
 
-/*!
+
+/*****************************************************************************************************//**
+*
 * @brief Converts the input string to a boolean value.
-*/
+*
+*********************************************************************************************************/
 bool InputReader::To_bool(const string& str) {
+
     std::istringstream is(str);
     bool b;
+
     is >> std::boolalpha >> b;
     return b;
 }

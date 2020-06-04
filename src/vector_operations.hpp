@@ -1,4 +1,3 @@
-
 #ifndef VECTOR_EXTENSIONS_H
 #define VECTOR_EXTENSIONS_H
 

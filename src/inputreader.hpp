@@ -10,10 +10,17 @@
 class InputReader{
 public:
     InputReader() {data.SetHamakerConstants();}
-    InputReader(std::string infile, std::ostream& os);
+    InputReader(const std::string infile, std::ostream& os);
 
-    bool Success() const {return success;} /*!< @brief Returns True if no error were encountered when reading the files.*/
-    InputData Get_data() const {return data;} /*!< @brief Returns an instance of InputData with values as defined in the input file, or default values if not defined in the input.*/
+    /*! @brief Returns True if no error were encountered when reading the files.
+    */
+    bool Success() const {return success;} 
+
+    /*! @brief Returns an instance of InputData with values as defined in the input file, 
+    * or default values if not defined in the input.
+    */ 
+    InputData Get_data() const {return data;} 
+
     std::vector<std::array<double, 7>> Read_particles(std::string filename, std::ostream& os);
 
 private:    
@@ -23,8 +30,15 @@ private:
     double check_pos(double value, std::string key);
 
     bool success{true};
+    //!< @brief Was the reading of infiles successful?
+
     int keys_read{0};
+    //!< @brief Number of keys reads from the infile.
+
     std::string errors;
+    //!< @brief Error messages. Empty if no errors.
+
     InputData data;
+    //!< @brief An instance of InputData where the input data is stored.
 };
 #endif

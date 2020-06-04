@@ -165,10 +165,12 @@ int test_F_image_particle_particle(const Particle& p_inc, const Particle& p2, co
 int test_F_vdW_particle_particle(const Particle& p_inc, const Particle& p2, const InputData& data){
     int c = 0;
     cout << "F_vdW_PP (1/2) ";
+    cout << "AH132 " << data.AH132 << endl;
+    cout << "AH232 " << data.AH232 << endl;
     arr p_to_p = p_inc.pos - p2.pos;
     double dist = norm(p_to_p);
-    arr t = F_vdW_particle_particle(p_inc, p2, p_to_p, dist, data.AH132);
-    c += !test_close_arr({0.0, 0.0, -1.2772123791667965e-15}, t);
+    arr t = F_vdW_particle_particle(p_inc, p2, p_to_p, dist, data.AH232);
+    c += !test_close_arr({0.0, 0.0, -3.25352056953788682e-15}, t);
 
     cout << "F_vdW_PP (2/2) ";
     arr null{0.0,0.0,0.0}; 
@@ -179,8 +181,8 @@ int test_F_vdW_particle_particle(const Particle& p_inc, const Particle& p2, cons
     p3.pos[2] = 0.0;    
     p_to_p = p_inc.pos - p3.pos;
     dist = norm(p_to_p);
-    t = F_vdW_particle_particle(p_inc, p3, p_to_p, dist, data.AH132);
-    c += !test_close_arr({5.347650492650949e-18, 2.1390601970603795e-17, -2.6738252463254743e-17}, t);
+    t = F_vdW_particle_particle(p_inc, p3, p_to_p, dist, data.AH232);
+    c += !test_close_arr({1.36223944900138741e-17, 5.44895779600554965e-17, -6.81119724500693584e-17}, t);
     return c;
 }
 
@@ -318,7 +320,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     fp.push_back(p2);
     data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({0.0, 0.0, -3.56073056367610112e-14}, t);
+    c += !test_close_arr({0.0, 0.0, -3.75836138271320964e-14}, t);
 
     Particle p3(0.0, 30e-9, data, {0, 0, 0}, {-1.0, 1.0, 0.0});
     p3.pos[0] = 20e-9;
@@ -328,12 +330,12 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     cout << "Total_force (3/4): ";
     data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({-2.09593118157761916e-15, -8.38372472631047666e-15, -2.51885253754563962e-14}, t);
+    c += !test_close_arr({-2.08765643758025628e-15, -8.35062575032102512e-15, -2.72062072858142958e-14}, t);
 
     cout << "Total_force (4/4): ";
     data.calcMagnetic = true;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({-4.6362399787774039e-13, -1.54129429998783044e-13, -1.59125556639996442e-11}, t);
+    c += !test_close_arr({-4.63615723133742863e-13, -1.54096331022793491e-13, -1.59145733459099942e-11}, t);
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     for (size_t i =0; i< 10000; ++i){    
