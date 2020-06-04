@@ -23,21 +23,8 @@ using arr = array<double, 3>;
 
 static double REL_TOL = 1e-12; 
 
-void print_vec(const vec& A){
-    for (auto a: A){
-        cout << a << " ";
-    }
-    cout << endl;
-}
-
-void print_arr(const arr& A){
-    for (auto a: A){
-        cout << a << " ";
-    }
-    cout << endl;
-}
-
-void print_arr9(const array<double,9>& A){
+template <typename T>
+void print_arr(const T& A){
     for (auto a: A){
         cout << a << " ";
     }
@@ -51,24 +38,9 @@ bool test_close_double(double a, double b){
     return fabs((a-b)/a) < REL_TOL;
 }
 
-bool test_close_vec(const vec& a, const vec& b){    
-    bool ret = true;
-    for(size_t i = 0; i<a.size(); ++i){
-        if(!test_close_double(a[i], b[i])){ret = false;}
-    }
-    if (ret){
-        cout << "passed." << endl;
-    }else{
-        cout << "failed." << endl << " Excpected:  ";
-        print_vec(a);
-        cout << endl << " Got:    ";
-        print_vec(b);
-        cout << endl;
-    }
-    return ret;
-}
-
-bool test_close_arr(const arr& a, const arr& b){    
+template <typename T>
+bool test_close_arr(const T& a, const T& b){    
+    assert(a.size()==b.size());
     bool ret = true;
     for(size_t i = 0; i<a.size(); ++i){
         if(!test_close_double(a[i], b[i])){ret = false;}
@@ -80,23 +52,6 @@ bool test_close_arr(const arr& a, const arr& b){
         print_arr(a);
         cout << endl << " Got:    ";
         print_arr(b);
-        cout << endl;
-    }
-    return ret;
-}
-
-bool test_close_arr9(const array<double,9>& a, const array<double,9>& b){    
-    bool ret = true;
-    for(size_t i = 0; i<a.size(); ++i){
-        if(!test_close_double(a[i], b[i])){ret = false;}
-    }
-    if (ret){
-        cout << "passed." << endl;
-    }else{
-        cout << "failed." << endl << " Excpected:  ";
-        print_arr9(a);
-        cout << endl << " Got:    ";
-        print_arr9(b);
         cout << endl;
     }
     return ret;
@@ -254,7 +209,7 @@ int test_E_field_gradient(const Particle& p_inc, const Particle& p2, const Input
     array<double, 9> t = Gradient_E_field_deposited_particle( p2, p_to_p , dist, data.E0, data.eps);
     array<double, 9> ref = {-1304921082236.9004, 0.0, 0.0, 0.0, -1304921082236.9004, 0.0,
                 0.0, 0.0, 2609842164473.801};
-    c += !test_close_arr9(ref, t);
+    c += !test_close_arr(ref, t);
 
 
     cout << "E_field_gradient (2/3) ";
@@ -265,7 +220,7 @@ int test_E_field_gradient(const Particle& p_inc, const Particle& p2, const Input
     t = Gradient_E_field_deposited_particle( p3, p_to_p , dist, data.E0, data.eps);
     ref = {140624999999.99997, 0.0, 0.0, 0.0,140624999999.99997, 0.0,
                 0.0, 0.0, -281249999999.99994};
-    c += !test_close_arr9(ref, t);
+    c += !test_close_arr(ref, t);
 
     cout << "E_field_gradient (3/3) ";
     p3.pos = {20e-9, 80e-9, 0.0};
@@ -277,7 +232,7 @@ int test_E_field_gradient(const Particle& p_inc, const Particle& p2, const Input
     ref = {-609114704473.9462, 185716698033.7088, -233806503301.45377, 185716698033.7088,
         87322913152.46185, -935226013205.8151,-227243057919.38818, -908972231677.5527,
          521791791321.4843};
-    c += !test_close_arr9(ref, t);
+    c += !test_close_arr(ref, t);
     return c;
 }
 
