@@ -5,6 +5,7 @@
 #include "../src/data_struct.cpp"
 #include "../src/inputreader.hpp"
 #include "../src/deposition.hpp"
+#include "../src/random.hpp"
 
 #include <vector>
 #include <string>
@@ -409,7 +410,9 @@ int test_inputreader_default(){
     return c;
 }
 
-int test_deposition(Deposition dep){
+void test_random(){
+    Random R;
+
     //Calculate mean values of the distributions (normal, uniform, and 3D uniform in sphere)  
     double avg_n{0.0}, avg_u{0.0}, x{0.0}, y{0.0}, z{0.0};
     double count_n{0.0}, count_u{0.0}, count_s{0.0};
@@ -417,9 +420,9 @@ int test_deposition(Deposition dep){
     arr ru, rs;
 
     for (size_t i = 0; i<10000; i++){
-        dep.Generate_random_normal(rn);
-        dep.Generate_random_uniform(ru);
-        dep.Generate_random_point_sphere(rs);
+        R.Fill_normal(rn);
+        R.Fill_uniform(ru);
+        rs = R.Generate_in_point_sphere();
         for (auto j:rn){
             avg_n += j;
             count_n += 1.0;
@@ -438,6 +441,10 @@ int test_deposition(Deposition dep){
     cout << "Mean of normal uniform (should be close to 0.5): " << avg_u/count_u << endl;
     cout << "Means of positions for points generated in sphere (should be zeros): " << endl;
     cout << x/count_s << endl << y/count_s << endl << z/count_s << endl;
+
+}
+
+int test_deposition(Deposition dep){
 
     int c = 0;
     cout << "\nTesting mobility (1/1) " ;
@@ -529,7 +536,14 @@ int main(){
     Deposition dep(data);
     nbr_errors += test_deposition(dep);
 
+    //Test random number generation
+    cout << "\n-------------------------------------------------------\n";
+    cout << "Testing Random number generation." << endl;
+    cout << "-------------------------------------------------------\n";
+    test_random();
+
     cout << "-------------------------------------------------------\n";
     cout << "\nTesting complete. In total " << nbr_errors <<" errors were found.\n\n" << endl;
     assert(nbr_errors==0);
+
 }

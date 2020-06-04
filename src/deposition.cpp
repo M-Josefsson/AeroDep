@@ -54,18 +54,11 @@ Deposition::Deposition(const InputData& data){
     //Check if log-norm distribution and/or doubly charged particles should be included.
     rand_size = data.diameter_std > 1e-4;
     rand_size2 = data.diameter_std2 > 1e-4;
-    double_charge = data.double_charge_fraction > 1e-4;         
+    double_charge = data.double_charge_fraction > 1e-4;        
 
-    //Instantiate the different distributions used for stachastic sampling.
-    uniform = std::uniform_real_distribution<double> (0.0, 1.0);
-    normal = std::normal_distribution<double> (0.0, 1.0); 
-
-    if ( rand_size ){
-        normal_diameter = std::lognormal_distribution<double> (log(data.diameter), data.diameter_std);
+    if ( rand_size ) {
+        distributions.Setup_lognorm(log(data.diameter), data.diameter_std, Random::CHARGE::SINGLE);
     }
-
-    generator = std::subtract_with_carry_engine<std::uint_fast64_t, 48, 5, 12> (time(0));
-    srand(time(0));
 
     //Setup for sampling for doubly charged particles
     if ( double_charge ){
@@ -74,7 +67,7 @@ Deposition::Deposition(const InputData& data){
         d_p2 *= 1e-9;
 
         if (rand_size2){
-            normal_diameter_double = std::lognormal_distribution<double> (log(d_p2), data.diameter_std2);
+            distributions.Setup_lognorm(log(d_p2), data.diameter_std2, Random::CHARGE::DOUBLE);
         }
     }
 }
@@ -139,8 +132,8 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     bool collided = false;
 
     //Generate random numbers for the inial position (x-y-plane) and magnetization.
-    Generate_random_uniform(r1);
-    Generate_random_point_sphere(r3);
+    distributions.Fill_uniform(r1);
+    r3 = distributions.Generate_in_point_sphere();
 
     //Calculate diamater based on user settings
     double current_q  = data.q;
@@ -153,7 +146,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     //Perform the time evolution until collision.
     while(!collided){
         
-        Generate_random_normal(r2);
+        distributions.Fill_normal(r2);
 
         collided = P.Step_time( data, frozen_particles, r2, os);
 
@@ -197,14 +190,14 @@ double Deposition::Get_diameter(double& current_q, const double& double_charge_f
 
     if (double_charge){
 
-        double r = uniform(generator);
+        double r = distributions.uniform();
 
         if ( double_charge_fraction > r ){
 
             current_q *= 2.0;
 
             if (rand_size2){
-                return normal_diameter_double(generator);
+                return distributions.log_norm(Random::CHARGE::DOUBLE);
             }else{
                 return d_p2;
             }
@@ -212,7 +205,7 @@ double Deposition::Get_diameter(double& current_q, const double& double_charge_f
     }
 
     if (rand_size){
-        return normal_diameter(generator);
+        return distributions.log_norm(Random::CHARGE::SINGLE);
     }else{
         return diameter;
     }
@@ -273,53 +266,6 @@ double Deposition::Mobility(const double& d, const double& mfp, const double& Z)
 
     double Cc2 = 1.0 + mfp/d*(2.514 + 0.8*exp(-0.55*d*0.5/mfp));    
     return 2.0*Cc2/d - Z;
-}
-
-
-/*****************************************************************************************************//**
-*
-* Fills the input array with random number from a normal distribution.
-*
-*********************************************************************************************************/
-void Deposition::Generate_random_normal(array<double, 9>& r){
-
-    for(size_t i = 0; i < r.size(); ++i){
-        r[i] = normal(generator);
-    }    
-}
-
-
-/*****************************************************************************************************//**
-*
-* Fills the input array with random number from an uniform distribution.
-*
-*********************************************************************************************************/
-void Deposition::Generate_random_uniform(vector3& r){
-
-    for(size_t i = 0; i < r.size(); ++i){
-        r[i] = uniform(generator);      
-    }    
-}
-
-
-/*****************************************************************************************************//**
-*
-* Fills the input array  the coordinates for a random 3D point within a sphere.
-*
-*********************************************************************************************************/
-void Deposition::Generate_random_point_sphere(vector3& r){    
-
-    while(true){ 
-
-        Generate_random_uniform(r);
-        double n = 0.0;
-        
-        for(int i=0; i<3; ++i){
-            r[i] = (r[i] - 0.5)*2.0;
-            n += pow(r[i], 2);
-        }
-        if (pow(n,0.5)<1.0){ return; }    
-    }
 }
 
 
