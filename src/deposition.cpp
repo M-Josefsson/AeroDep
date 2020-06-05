@@ -22,7 +22,7 @@
 #include "deposition.hpp"
 #include "constants.hpp"
 
-#include <math.h>  //pow
+#include <math.h>  //pow, sqrt, log
 #include <ctime>   //time(0)
 #include <fstream>
 #include <iostream>
@@ -52,12 +52,12 @@ Deposition::Deposition(const InputData& data){
     frozen_particles.reserve(data.nbr_of_particles);
     
     //Check if log-norm distribution and/or doubly charged particles should be included.
-    rand_size = data.diameter_std > 1e-4;
-    rand_size2 = data.diameter_std2 > 1e-4;
+    rand_size = data.diameter_std > 0.0;
+    rand_size2 = data.diameter_std2 > 0.0;
     double_charge = data.double_charge_fraction > 1e-4;        
 
     if ( rand_size ) {
-        distributions.Setup_lognorm(log(data.diameter), data.diameter_std, Random::CHARGE::SINGLE);
+        distributions.Setup_lognorm((data.diameter), data.diameter_std, Random::CHARGE::SINGLE);
     }
 
     //Setup for sampling for doubly charged particles
@@ -67,7 +67,7 @@ Deposition::Deposition(const InputData& data){
         d_p2 *= 1e-9;
 
         if (rand_size2){
-            distributions.Setup_lognorm(log(d_p2), data.diameter_std2, Random::CHARGE::DOUBLE);
+            distributions.Setup_lognorm((d_p2), data.diameter_std2, Random::CHARGE::DOUBLE);
         }
     }
 }

@@ -50,13 +50,16 @@ Random::Random(){
 *********************************************************************************************************/
 void Random::Setup_lognorm(const double mean, const double std, const int option){
 
+    double mu = log( pow(mean,2) / sqrt(pow(mean,2) + pow(std,2)) );
+    double s = log ( 1 + pow(std, 2) / pow(mean, 2) );
+
     if(option == CHARGE::SINGLE){
 
-        log_norm_1 = std::lognormal_distribution<double> (log(mean), std);
+        log_norm_1 = std::lognormal_distribution<double> (mu, s);
 
     }else if(option == CHARGE::DOUBLE){
 
-        log_norm_2 = std::lognormal_distribution<double> (log(mean), std);
+        log_norm_2 = std::lognormal_distribution<double> (mu, s);
 
     } else {
 
