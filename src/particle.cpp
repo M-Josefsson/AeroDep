@@ -10,7 +10,7 @@
 * @class Particle 
 * @brief This class represents a single particle. 
 *
-* The calss is used for storing the particle's 
+* The class is used for storing the particle's 
 * parameters and for integrating the equations of motion. 
 *
 *********************************************************************************************************/
@@ -34,9 +34,9 @@ using std::endl;
 * is randomized in the xy-plane within the control area (data.control_l^2). 
 * 
 * @param z_start_ z-component of the initial position
-* @param d_p the particle's diamater
+* @param d_p the particle's diameter
 * @param data Data structure containing the user input data and environment data.
-* @param r Array contining three uniformly sampled random number used for the y- and x-component 
+* @param r Array containing three uniformly sampled random number used for the y- and x-component 
 * of the initial position.
 * @param rm vector3 representing a 3D point uniformly sampled inside a sphere. Used for the 
 * initial random magnetization.
@@ -67,7 +67,7 @@ Particle::Particle (const double& z_start_, const double& d_p, const InputData& 
 *
 * @param T Temperature
 * @param v_g Carrier gas velocity.
-* @param r vector3 contining three uniformly sampled random number used for the y- and x-component 
+* @param r vector3 containing three uniformly sampled random number used for the y- and x-component 
 * of the initial position.
 * @param control_l Defines the side-length of the simulation volume.
 *
@@ -91,9 +91,9 @@ void Particle::Set_initial_conditions( const double& T, const vector3& v_g,
 
 /*****************************************************************************************************//**
 *
-* @brief Make a forward timestep.
+* @brief Make a forward time step.
 *
-* Make a forward by timestep increasing time with dt (Euler's method) using the Chandrasekar 
+* Make a forward by time step increasing time with dt (Euler's method) using the Chandrasekhar 
 * procedure for particle motion including Brownian motion. This routine is based on the one 
 * described in the appendix of Zarutskaya and Shapiro Journal of Aerosol Science 31, 907 (2000).
 * After the time step it checks whether the particle has collided with the substrate or 
@@ -190,7 +190,7 @@ bool Particle::Check_collision( const vector<Particle>& frozen_particles,
         if(fabs(frozen_particle.pos[2]-pos[2]) < (frozen_particle.diameter/2.0 + diameter/2.0)*1.5 ){
             frozen_pos[2] = frozen_particle.pos[2];
 
-            //Include particles in neighbouring boxes
+            //Include particles in neighboring boxes
             for(double x_offset : {-1,0,1}){ 
                 for(double y_offset : {-1,0,1}){ 
                 

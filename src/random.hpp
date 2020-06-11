@@ -19,7 +19,7 @@ public:
     
 
     double uniform(){ return uniform_engine(generator);}
-    //!< Returns a single random number uniformely sampled in the range [0,1].
+    //!< Returns a single random number uniformly sampled in the range [0,1].
 
     double log_norm(int option);
 

@@ -9,7 +9,7 @@
 *
 * @class InputReader 
 *
-* @brief This calss is responsible for reading infiles, both containing input/environment parameters
+* @brief This class is responsible for reading infiles, both containing input/environment parameters
 * as well as frozen (already deposited) particles from a previous run.
 *
 *********************************************************************************************************/
@@ -93,7 +93,7 @@ InputReader::InputReader(const std::string infile, std::ostream& os){
 
 /*****************************************************************************************************//**
 *
-* @brief Reads the value for 'key' and converts 'value' to the apprioriate data type for key.
+* @brief Reads the value for 'key' and converts 'value' to the appropriate data type for key.
 *
 *********************************************************************************************************/
 void InputReader::Read_key(const string& key, const string& value){
@@ -233,6 +233,7 @@ double InputReader::check_pos(double value, string key){
 
     if(value < 0.0){
         errors += "Negative value (" + std::to_string(value) + ")  not allowed for key " + key;
+        success = false;
     }
     return value;
 }
@@ -304,7 +305,7 @@ vector<array<double, 7>> InputReader::Read_particles(string filename, std::ostre
 
 /*****************************************************************************************************//**
 *
-* @brief Converts the input string to a boolean value.
+* @brief Converts the input string to a Boolean value.
 *
 *********************************************************************************************************/
 bool InputReader::To_bool(const string& str) {

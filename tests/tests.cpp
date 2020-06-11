@@ -393,10 +393,10 @@ int test_inputreader_default(){
     c += test_input(data.n_gas, 1.0, "n_gas");
     c += test_input(data.mfp, 66.5e-9, "mean_free_path");
     c += test_input(data.Xi, -2.2e-5, "particle_susceptibility");
-    c += test_input(data.density, 7310, "density");
+    c += test_input(data.density, 7874, "density");
     c += test_input(data.eps[1], 3.9, "dielectric_substrate");
     c += test_input(data.eps[3], 1.0, "dielectric_gas");
-    c += test_input(data.m_saturation, 1.713e6, "m_saturation");
+    c += test_input(data.m_saturation, 1.707e6, "m_saturation");
     c += test_input(data.diameter_std, 0.0, "diameter_std");
     c += test_input(data.diameter_std2, 0.0, "diameter_std2");
     c += test_input(data.double_charge_fraction, 0.0, "double_charge_fraction");
@@ -416,7 +416,7 @@ void test_random(){
     //Calculate mean values of the distributions (normal, uniform, and 3D uniform in sphere)  
     double avg_n{0.0}, avg_u{0.0}, x{0.0}, y{0.0}, z{0.0};
     double count_n{0.0}, count_u{0.0}, count_s{0.0};
-    array<double, 9> rn;
+    array<double, 6> rn;
     arr ru, rs;
 
     for (size_t i = 0; i<10000; i++){
@@ -484,6 +484,8 @@ int main(){
     InputData data;
     data.SetHamakerConstants();
     data.alignment_field_strength = 1e10;
+    data.density = 7310.0;
+    data.m_saturation = 1.713e6;
 
     arr r{0.0,0.0,0.0};
     arr m{0.0, 0.0, 1.0};

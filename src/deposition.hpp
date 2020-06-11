@@ -35,10 +35,10 @@ private:
     //!< @brief Original start height for new particles.    
 
     double diameter; 
-    //!< @brief Diameter (or mean diameter if rand_size=True) of single charegd particles.
+    //!< @brief Diameter (or mean diameter if rand_size=True) of single charged particles.
 
     double d_p2;
-    //!< @brief Diameter (or mean diameter if rand_size2=True) of double charegd particles.
+    //!< @brief Diameter (or mean diameter if rand_size2=True) of double charged particles.
 
     bool rand_size;
     //!< @brief Generate particles according to a Log-norm distribution?

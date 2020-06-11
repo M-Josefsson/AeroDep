@@ -1,7 +1,7 @@
 /*****************************************************************************************************//**
 * @file
 * 
-* @brief This file containes functions for calculating the two-particle forces and for calculating the 
+* @brief This file contains functions for calculating the two-particle forces and for calculating the 
 *  electric and magnetic fields around already deposited particles.
 *
 *********************************************************************************************************/
@@ -58,7 +58,7 @@ vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_part
         vector3 p_to_p{0.0, 0.0, 0.0};
         frozen_pos[2] = frozen_particle.pos[2];
 
-        //Include particles in neighbouring boxes
+        //Include particles in neighboring boxes
         for(double x_offset : {-1.0, 0.0, 1.0}){ 
             for(double y_offset : {-1.0, 0.0, 1.0}){ 
                             
@@ -400,11 +400,11 @@ vector3 F_ferromagnetic_dipole_dipole( const Particle& particle,  const Particle
 * @brief Calculates the magnetic force on a weakly magnetic particle.
 *
 *
-* Calculates the mangetic force on an incoming particle with susceptibility Xi.
+* Calculates the magnetic force on an incoming particle with susceptibility Xi.
 * The calculation is based on evaluating the gradient in the magnetic field that arises from
 * corrections due to the magnetic moment of the already deposited particle. The particles are assumed to 
-* be single domained with magnetization susceptilibity Xi. The particles are also assumed to be small 
-* enought such that the magnetic field gradient is homogenous through the particle. The force calculation
+* be single domained with magnetization susceptibility Xi. The particles are also assumed to be small 
+* enough such that the magnetic field gradient is homogeneous through the particle. The force calculation
 * is based on Mikkelsen et al. JoMaMM 293, 578 (2005).
 *
 * The force is given by
