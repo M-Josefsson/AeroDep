@@ -83,7 +83,7 @@ void Random::Fill_normal(vector3& r){
 * @brief Fills the input array with random numbers from a normal distribution with mean 0 and std 1.
 *
 *********************************************************************************************************/
-void Random::Fill_normal(std::array<double, 9>& r){
+void Random::Fill_normal(std::array<double, 6>& r){
     for( auto& i : r) i = normal_engine(generator);
 }
 

@@ -127,7 +127,7 @@ void Deposition::Add_input_particles( const vector<array<double, 7>>& input_part
 bool Deposition::Add_particle(ostream& os, const InputData& data){   
 
     vector3 r1, r3;
-    array<double, 9> r2;
+    array<double, 6> r2;
     vector<vector3> Pos, magnetization;
     bool collided = false;
 
@@ -382,5 +382,5 @@ void Deposition::Finalize(ostream& os){
 
     os << "Total number of particles: " << frozen_particles.size() << endl;
     os << "Particles collided with substrate: " << s_count << endl;
-    os << "Particles collided with other Particle: " << p_count << endl;
+    os << "Particles collided with other particle: " << p_count << endl;
 }

@@ -16,7 +16,7 @@ public:
                const vector3& r, const vector3& rm);        
 
     bool Step_time( const InputData& data, const vector<Particle>& frozen_particles, 
-                    const array<double, 9>& r, ostream& os);           
+                    const array<double, 6>& r, ostream& os);           
 
     char Get_collision_object(); 
 

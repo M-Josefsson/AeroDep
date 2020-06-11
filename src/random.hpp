@@ -25,7 +25,7 @@ public:
 
     void Fill_normal( vector3& r);
     void Fill_uniform( vector3& r );
-    void Fill_normal( std::array<double, 9>& r );
+    void Fill_normal( std::array<double, 6>& r );
 
     vector3 Generate_in_point_sphere();
 
