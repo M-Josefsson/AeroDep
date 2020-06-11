@@ -17,7 +17,7 @@ Molecular dynamics-type simulations of the deposition process of aerosol nanopar
 
 
 ### Overview
-This program performs molecular dynamics-type calculations to simulate the final steps of the deposition process of (magnetic) aerosol nanoparticles onto an substrate. The particle concentration in the gas is assumed to be very low (<$10^6$ particles per $cm^{-3}$)such that particles in the gas does not interact, and only one particle is in the aerosol phase in the simulation volume at any given time. When the particle collides with the substrate, or another particle, its properties (such as position and magnetization)
+This program performs molecular dynamics-type calculations to simulate the final steps of the deposition process of (magnetic) aerosol nanoparticles onto an substrate. The particle concentration in the gas is assumed to be very low (<1e6 particles per cm3$)such that particles in the gas does not interact, and only one particle is in the aerosol phase in the simulation volume at any given time. When the particle collides with the substrate, or another particle, its properties (such as position and magnetization)
 are frozen, and a new particle is spawned.
 
 The calculations are based on Euler's method for solving Newton's force equation by taking many small successive time steps. The forces included are of electrostatic, magnetic, and van der Waals nature. Interactions between the frozen particles and the incoming particle are taken into account using pair-wise interactions. In addition, stochastic motion governed by Brownian motion is included as it has a significant effect on the particles' 
@@ -77,7 +77,7 @@ All available keys are (default values within parenthesis):
 - ***Bx*** - external magnetic field (B-field) x-component (0.0)
 - ***By*** - external magnetic field (B-field) y-component (0.0)
 - ***Bz*** - external magnetic field (B-field) z-component (0.0)
-- ***m_saturation*** - saturation magnetization of the particles in A/m2 (1.707e6)
+- ***m_saturation*** - saturation magnetization of the particles in A/m2 (1.707e6 Fe)
 - ***alignment_field_strength*** - local H-field strength above which a particle's magnetization is aligned with the field (1e-5)
 - ***diameter_std*** - standard deviation in m for the diameter of the particles in a log-norm distribution (0.0)
 - ***diameter_std2*** - standard deviation in m for the diameter of doubly charged particles in a log-norm distribution (0.0)
