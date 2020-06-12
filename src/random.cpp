@@ -1,7 +1,7 @@
 /*****************************************************************************************************//**
 * @file 
 *
-* @brief This file contains the Random calss.
+* @brief This file contains the Random class.
 *
 *********************************************************************************************************/
 
@@ -9,7 +9,7 @@
 *
 * @class Random
 *
-* @brief This calss is responsible for generating random numbers from the different distributions used in 
+* @brief This class is responsible for generating random numbers from the different distributions used in 
 * the simulation.
 *
 * It contains functionality to generate numbers from a normal, uniform as well as log-norm distributions.
@@ -83,7 +83,7 @@ void Random::Fill_normal(vector3& r){
 * @brief Fills the input array with random numbers from a normal distribution with mean 0 and std 1.
 *
 *********************************************************************************************************/
-void Random::Fill_normal(std::array<double, 9>& r){
+void Random::Fill_normal(std::array<double, 6>& r){
     for( auto& i : r) i = normal_engine(generator);
 }
 
@@ -128,9 +128,9 @@ double Random::log_norm(int option){
 
 /*****************************************************************************************************//**
 *
-* @brief Returns a random 3D point sampled uniformely from inside a sphere with radius 1. 
+* @brief Returns a random 3D point sampled uniformly from inside a sphere with radius 1. 
 *
-* All coorinates are in the range [-1,1].
+* All coordinates are in the range [-1,1].
 *
 * @return vector3 containing a random point.
 *

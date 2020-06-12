@@ -1,7 +1,7 @@
 /*****************************************************************************************************//**
 * @file 
 *
-* @brief This file contains the Deposition calss.
+* @brief This file contains the Deposition class.
 *
 *********************************************************************************************************/
 
@@ -12,7 +12,7 @@
 * @brief This class controls the generation of new particles and is the class that the 
 * main program (or the user) typically talks to.
 *
-* After creating a new particle the Deposition calss repeatedly calls the time evolution 
+* After creating a new particle the Deposition class repeatedly calls the time evolution 
 * step in the Particle class until collision. 
 * A Deposition object keeps track of all the previously generated (now frozen) particles.
 * This class also writes the outputs (particle positions and trajectories) to the respective files.
@@ -127,7 +127,7 @@ void Deposition::Add_input_particles( const vector<array<double, 7>>& input_part
 bool Deposition::Add_particle(ostream& os, const InputData& data){   
 
     vector3 r1, r3;
-    array<double, 9> r2;
+    array<double, 6> r2;
     vector<vector3> Pos, magnetization;
     bool collided = false;
 
@@ -175,9 +175,9 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
 
 /*****************************************************************************************************//**
 *
-* @brief Returns the diamater of a new particle. 
+* @brief Returns the diameter of a new particle. 
 *
-* The diameter is calculated based on the user input (fraction of double charged poarticles
+* The diameter is calculated based on the user input (fraction of double charged particles
 * and standard deviations for particle diameters). 
 *
 * @param current_q The user defined charge of the particles.
@@ -219,7 +219,7 @@ double Deposition::Get_diameter(double& current_q, const double& double_charge_f
 * Iteratively solves for the diameter of a doubly charged particle. The solution is based in 
 * all particles having the same mobility.
 *
-* @param d The user defined (mean) diamater for a particle with single charge.
+* @param d The user defined (mean) diameter for a particle with single charge.
 * @param mfp the particles' mean free path. 
 *
 * @return The diameter.
@@ -257,7 +257,7 @@ double Deposition::Double_charge_diameter(double d, double mfp){
 *
 * @param d The particle diameter.
 * @param mfp the particles' mean free path. 
-* @param Z Cc/diamater
+* @param Z Cc/diameter
 *
 * @return The mobility.
 *
@@ -382,5 +382,5 @@ void Deposition::Finalize(ostream& os){
 
     os << "Total number of particles: " << frozen_particles.size() << endl;
     os << "Particles collided with substrate: " << s_count << endl;
-    os << "Particles collided with other Particle: " << p_count << endl;
+    os << "Particles collided with other particle: " << p_count << endl;
 }

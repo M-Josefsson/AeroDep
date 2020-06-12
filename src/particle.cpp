@@ -10,7 +10,7 @@
 * @class Particle 
 * @brief This class represents a single particle. 
 *
-* The calss is used for storing the particle's 
+* The class is used for storing the particle's 
 * parameters and for integrating the equations of motion. 
 *
 *********************************************************************************************************/
@@ -34,9 +34,9 @@ using std::endl;
 * is randomized in the xy-plane within the control area (data.control_l^2). 
 * 
 * @param z_start_ z-component of the initial position
-* @param d_p the particle's diamater
+* @param d_p the particle's diameter
 * @param data Data structure containing the user input data and environment data.
-* @param r Array contining three uniformly sampled random number used for the y- and x-component 
+* @param r Array containing three uniformly sampled random number used for the y- and x-component 
 * of the initial position.
 * @param rm vector3 representing a 3D point uniformly sampled inside a sphere. Used for the 
 * initial random magnetization.
@@ -67,7 +67,7 @@ Particle::Particle (const double& z_start_, const double& d_p, const InputData& 
 *
 * @param T Temperature
 * @param v_g Carrier gas velocity.
-* @param r vector3 contining three uniformly sampled random number used for the y- and x-component 
+* @param r vector3 containing three uniformly sampled random number used for the y- and x-component 
 * of the initial position.
 * @param control_l Defines the side-length of the simulation volume.
 *
@@ -91,9 +91,9 @@ void Particle::Set_initial_conditions( const double& T, const vector3& v_g,
 
 /*****************************************************************************************************//**
 *
-* @brief Make a forward timestep.
+* @brief Make a forward time step.
 *
-* Make a forward by timestep increasing time with dt (Euler's method) using the Chandrasekar 
+* Make a forward by time step increasing time with dt (Euler's method) using the Chandrasekhar 
 * procedure for particle motion including Brownian motion. This routine is based on the one 
 * described in the appendix of Zarutskaya and Shapiro Journal of Aerosol Science 31, 907 (2000).
 * After the time step it checks whether the particle has collided with the substrate or 
@@ -101,7 +101,7 @@ void Particle::Set_initial_conditions( const double& T, const vector3& v_g,
 *
 * @param data Data structure containing the user input data and environment data.
 * @param frozen_particles Vector containing the already deposited (frozen) particles.
-* @param r Array containing 9 random numbers sampled from a normal distribution. Used for Brownian motion.
+* @param r Array containing 6 random numbers sampled from a normal distribution. Used for Brownian motion.
 * @param os Ostream where output (only info) should be written. This is normally std::cout.
 *
 * @return False if the simulation should be stopped (due to collision or exceeding max number of 
@@ -110,14 +110,14 @@ void Particle::Set_initial_conditions( const double& T, const vector3& v_g,
 *********************************************************************************************************/
 
 bool Particle::Step_time( const InputData& data, const vector<Particle>& frozen_particles, 
-                          const std::array<double,9>& r, ostream& os){    
+                          const std::array<double,6>& r, ostream& os){    
 
     double Beta = (3.0*PI*data.eta_g*diameter)/(Cc*mass);
     double eb = exp(-Beta*data.dt);    
     double Bm = Beta*mass;
 
     double sigma_v = sqrt(KB*data.T/mass*(1.0-eb*eb));
-    double sigma_vr = KB*data.T/(mass*Beta)*pow(1.0-eb, 2);
+    double sigma_vr = KB*data.T/(Bm)*pow(1.0-eb, 2);
     double sigma_r = 1.0/Beta*sqrt(KB*data.T/mass*(2.0*Beta*data.dt - 3.0 + 4.0*eb-pow(eb,2)));
 
     vector3 v_new{0.0, 0.0, 0.0};
@@ -127,8 +127,8 @@ bool Particle::Step_time( const InputData& data, const vector<Particle>& frozen_
     v_new[1] = vel[1]*eb + (data.v_g[1] + F_ext[1])/(Bm)*(1.0-eb) + sigma_v*r[1];
     v_new[2] = vel[2]*eb + (data.v_g[2] + F_ext[2])/(Bm)*(1.0-eb) + sigma_v*r[2];
 
-    double sigma_sqrt = sqrt( (pow(sigma_r,2) - pow(sigma_vr/sigma_v,2)));
     double sigma_frac = sigma_vr/sigma_v;
+    double sigma_sqrt = sqrt( (pow(sigma_r,2) - pow(sigma_frac, 2)));
 
     pos[0] = pos[0] + vel[0]/Beta*(1.0-eb)+(data.v_g[0] + F_ext[0]/(Bm)) * (data.dt-1.0/Beta*(1.0-eb)) + r[0]*sigma_frac + r[3]*sigma_sqrt;
     pos[1] = pos[1] + vel[1]/Beta*(1.0-eb)+(data.v_g[1] + F_ext[1]/(Bm)) * (data.dt-1.0/Beta*(1.0-eb)) + r[1]*sigma_frac + r[4]*sigma_sqrt;
@@ -190,7 +190,7 @@ bool Particle::Check_collision( const vector<Particle>& frozen_particles,
         if(fabs(frozen_particle.pos[2]-pos[2]) < (frozen_particle.diameter/2.0 + diameter/2.0)*1.5 ){
             frozen_pos[2] = frozen_particle.pos[2];
 
-            //Include particles in neighbouring boxes
+            //Include particles in neighboring boxes
             for(double x_offset : {-1,0,1}){ 
                 for(double y_offset : {-1,0,1}){ 
                 

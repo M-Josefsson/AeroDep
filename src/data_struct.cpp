@@ -40,10 +40,10 @@ struct InputData {
     //!< Defines the simulation area in the x-y plane (control_^2).
 
     double T {300.0}; 
-    //!< Temeprature.
+    //!< Temperature.
 
     double diameter {30e-9}; 
-    //!< Particle (mean) diamater.
+    //!< Particle (mean) diameter.
 
     double dt {1e-9}; 
     //!< Time step.
@@ -58,7 +58,7 @@ struct InputData {
     //!< Refractive index of the gas. Default: Nitrogen.
 
     double eta_g {18.13e-6}; 
-    //!< Dynamic viscocity(?) of the gas.
+    //!< Dynamic viscosity of the gas.
 
     double mfp {66.5e-9};
     //!< particle mean free path.
@@ -69,11 +69,11 @@ struct InputData {
     double interaction_length {500e-9}; 
     //!< Particle-particle forces are only calculated for distances below this value.
 
-    double density {7310.0}; 
+    double density {7874.0}; 
     //!< Particle density. Default: Iron.
 
-    double m_saturation {1.713e6}; 
-    //!< Particle's (saturation) magnetisation. Default: Iron (bulk).
+    double m_saturation {1.707e6}; 
+    //!< Particle's (saturation) magnetization. Default: Iron (bulk).
 
     double diameter_std {0.0}; 
     //!< Standard deviation used for a log-norm distribution for diameters.
@@ -107,7 +107,7 @@ struct InputData {
     //!< Include magnetic forces?
 
     bool magnetic_ferro {true}; 
-    //!< Use ferromagnetic force calculation? If false, paramegnetic force calculation is used.
+    //!< Use ferromagnetic force calculation? If false, paramagnetic force calculation is used.
 
     double AH131;
     //!< Hamaker constant of the substrate material.
@@ -122,7 +122,7 @@ struct InputData {
     *
     * @brief Calculates and sets the values of the Hamaker constants (AH131 and AH132). 
     *
-    * The values are based on refractive indicies, relative permittivities, and termperature. This function 
+    * The values are based on refractive indices, relative permittivities, and temperature. This function 
     * must be called for the Hamaker constants to be defined. 
     *
     ******************************************************************************************************/
