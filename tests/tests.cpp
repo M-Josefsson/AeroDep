@@ -126,7 +126,7 @@ int test_F_vdW_particle_particle(const Particle& p_inc, const Particle& p2, cons
     arr p_to_p = p_inc.pos - p2.pos;
     double dist = norm(p_to_p);
     arr t = F_vdW_particle_particle(p_inc, p2, p_to_p, dist, data.AH232);
-    c += !test_close_arr({0.0, 0.0, -3.25352056953788682e-15}, t);
+    c += !test_close_arr({0.0, 0.0, -2.43753761069778364e-13}, t);
 
     cout << "F_vdW_PP (2/2) ";
     arr null{0.0,0.0,0.0}; 
@@ -138,7 +138,7 @@ int test_F_vdW_particle_particle(const Particle& p_inc, const Particle& p2, cons
     p_to_p = p_inc.pos - p3.pos;
     dist = norm(p_to_p);
     t = F_vdW_particle_particle(p_inc, p3, p_to_p, dist, data.AH232);
-    c += !test_close_arr({1.36223944900138741e-17, 5.44895779600554965e-17, -6.81119724500693584e-17}, t);
+    c += !test_close_arr({8.99834836034805674e-15, 3.5993393441392227e-14, -4.49917418017402664e-14}, t);
     return c;
 }
 
@@ -276,7 +276,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     fp.push_back(p2);
     data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({0.0, 0.0, -3.75836138271320964e-14}, t);
+    c += !test_close_arr({0.0, 0.0, -2.78083854327372518e-13}, t);
 
     Particle p3(0.0, 30e-9, data, {0, 0, 0}, {-1.0, 1.0, 0.0});
     p3.pos[0] = 20e-9;
@@ -286,12 +286,12 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     cout << "Total_force (3/4): ";
     data.calcMagnetic = false;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({-2.08765643758025628e-15, -8.35062575032102512e-15, -2.72062072858142958e-14}, t);
+    c += !test_close_arr({6.89706952827778644e-15, 2.75882781131111458e-14, -3.1263007761534491e-13}, t);
 
     cout << "Total_force (4/4): ";
     data.calcMagnetic = true;
     t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({-4.63615723133742863e-13, -1.54096331022793491e-13, -1.59145733459099942e-11}, t);
+    c += !test_close_arr({-4.54630997167884765e-13, -1.18157427159361326e-13, -1.61999972162395245e-11}, t);
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     for (size_t i =0; i< 10000; ++i){    

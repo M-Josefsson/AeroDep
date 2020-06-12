@@ -356,7 +356,10 @@ vector3 F_vdW_particle_particle( const Particle& particle, const Particle& froze
     double S = r - particle.diameter/2 - frozen_particle.diameter/2;
 
     vector3 F = p_to_p * (-1.0)/r * (32.0*AH/3.0 * pow( R1*R2/(2.0*R1+ S)/(2.0*R2 + S), 2)
-                            * (R1*R2 / pow(S, 2)) * ( (R1 + R2 + S) / pow(2.0*R1 + 2.0*R2 + S, 2) ) );                
+                            * (R1*R2 / pow(S, 2)) * ( (R1 + R2 + S) / pow(2.0*R1 + 2.0*R2 + S, 2) ) );  
+
+    F = F + p_to_p * (-1.0)/r * 4.0/3.0*AH*R1*R2*( R1 + R2 + S ) / 
+                                        ( S*(2*R1 + S)*(2*R2 + S)*(2*R1 + 2*R2 + S));                                       
     
     return F;
 }
