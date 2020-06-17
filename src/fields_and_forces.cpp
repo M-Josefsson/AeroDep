@@ -400,8 +400,9 @@ vector3 F_ferromagnetic_dipole_dipole( const Particle& particle,  const Particle
 
 /*****************************************************************************************************//**
 *
-* @brief Calculates the magnetic force on a weakly magnetic particle.
+* @brief Experimental feature! Calculates the magnetic force on a weakly magnetic particle.
 *
+* Warning: this is an experimental feature that is not properly tested.
 *
 * Calculates the magnetic force on an incoming particle with susceptibility Xi.
 * The calculation is based on evaluating the gradient in the magnetic field that arises from
@@ -425,24 +426,24 @@ vector3 F_ferromagnetic_dipole_dipole( const Particle& particle,  const Particle
 vector3 F_paramagnetic( const Particle& particle, const vector3& p_to_p, 
                         const double& dist, const vector3& B_ext){
 
-    vector3 B = B_ext/MU0;   
-    double BdotR = dot(B, p_to_p);
-    double BdotB = dot(B, B);    
+    vector3 H = B_ext/MU0;   
+    double HdotR = dot(H, p_to_p);
+    double HdotH = dot(H, H);    
 
     vector3 F{0.0, 0.0, 0.0}, f1{0.0, 0.0, 0.0}, f2{0.0, 0.0, 0.0};
 
     //M1DdH2
-    f1 = f1 - p_to_p*(15.0*pow(BdotR, 2)/pow(dist, 3));        
-    f1 = f1 + p_to_p*(3.0*BdotB/dist);    
-    f1 = f1 + B*(3.0*BdotR/dist);
+    f1 = f1 - p_to_p*(15.0*pow(HdotR, 2)/pow(dist, 3));        
+    f1 = f1 + p_to_p*(3.0*HdotH/dist);    
+    f1 = f1 + H*(3.0*HdotR/dist);
     f1 = f1 * 3.0*pow(particle.Xi/(particle.Xi+3.0), 2) * pow(particle.diameter/2.0, 3) / pow(dist, 4);    
     F = F + f1;    
 
     //dM1DdH2
-    f2 = f2 - p_to_p*(12.0*pow(BdotR, 2)/pow(dist, 3));
-    f2 = f2 + B*(BdotR*3.0/dist);
-    f2 = f2 - p_to_p*(BdotB*3.0/dist);    
-    f2 = f2 * 3.0 * pow(particle.Xi/(particle.Xi+3.0), 3) * pow(particle.diameter/(2.0*dist), 6) / dist; //Check if its the same Xi
+    f2 = f2 - p_to_p*(12.0*pow(HdotR, 2)/pow(dist, 3));
+    f2 = f2 + H*(HdotR*3.0/dist);
+    f2 = f2 - p_to_p*(HdotH*3.0/dist);    
+    f2 = f2 * 3.0 * pow(particle.Xi/(particle.Xi+3.0), 3) * pow(particle.diameter/(2.0*dist), 6) / dist;
     F = F + f2;   
 
     F = F * MU0 * particle.V;
