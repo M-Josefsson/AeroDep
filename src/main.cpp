@@ -27,16 +27,16 @@
 * @mainpage 
 * 
 * This program performs molecular dynamics-type calculations in order to simulate the final steps of the
-* deposition process of (magnetic) nanoparticles in an aerosol phase onto an substrate. The particle 
-* concentration in the gas is assumed to be very low such that only one particle is in the aerosol phase 
+* deposition process of (magnetic) nanoparticles in the aerosol phase onto a substrate. The particle 
+* concentration in the gas is assumed to be low such that only one particle is in the aerosol phase 
 * in the simulation volume at any given time. When the particle collides with the substrate, or another 
 * particle, its properties (such as position and magnetization) are frozen, and a new particle is spawned.
 *
 * The calculations are based on Euler's method for solving Newton's force equation by taking many small 
 * successive time steps. The forces included are of electrostatic, magnetic, and van der Waals nature. 
-* Interactions between the frozen particles and the incoming particle is taken into account using 
-* pair-wise interactions. In addition, stochastic motion governed by Brownian motion is included as it has
-* a significant effect on the particles' trajectories for small nano particles.
+* Interactions between the frozen particles and the incoming particle are taken into account using 
+* pair-wise interactions. In addition, stochastic motion governed by Brownian motion is included, as it has
+* a significant effect on the particles' trajectories for small nanoparticles.
 * 
 * AeroDep is mainly meant to be used as a standalone program, but its different source code parts can
 * also be used on their own in other projects. This documentations aims describing the individual parts of 

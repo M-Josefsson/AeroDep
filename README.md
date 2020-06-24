@@ -31,7 +31,7 @@ The integration scheme and Brownian motion treatment is described in Zarutskaya 
 
 
 ### Installation and requirements 
-The program is entirely run and installed using the command line. The only requirement for compiling the program is to use the gcc compiler (for Windows it is recommended to use minGW). This requirement can be relaxed if the flag `-ffast-math` is removed from `src/makefile`.
+The program is entirely run and installed using the command line. The only requirements for compiling the program is the `g++` compiler, as well as `make`. See the [GNU website](https://www.gnu.org) for more info on how to install them (for Windows it is recommended to use [minGW](http://mingw.org)).
 
 For compilation `cd` to `AeroDep/src` and type 
 ```bash
@@ -57,7 +57,7 @@ All available keys are (default values within parenthesis):
 
 General
 - ***particle_number*** total number of particles in the deposition (100)
-- ***start_height*** distance between a newly generated particle and the highest frozen particle or substrate in m (150e-9)
+- ***start_height*** distance between a newly generated particle and the highest frozen particle or substrate in m (500e-9)
 - ***box_size*** side-length of the simulation box in m (1e-6)
 - ***dt*** time step in s (1e-9)
 - ***interaction_length*** interactions between particles separated by more than this value, given in m, are ignored (0.5e-6)
@@ -96,7 +96,7 @@ Magnetism
 - ***magnetic*** include magnetic interactions? (true)
 - ***magnetic_type*** type of magnetic interaction to use in force calculations. Options are 'ferro' and 'para'. Default is 'ferro'.
 
-Polydisperse distribution(s)
+Size distribution(s)
 - ***diameter_std*** standard deviation in m for the diameter of the particles in a log-norm distribution (0.0)
 - ***diameter_std2*** standard deviation in m for the diameter of doubly charged particles in a log-norm distribution (0.0)
 - ***double_charge_fraction*** fraction of doubly charged particles (0.0)
@@ -219,7 +219,7 @@ density = 8908
 #Magnetic
 Bz = 0.5
 
-#Polydisperse sizes
+#Size distributions
 diameter_std = 10e-9
 double_charge_fraction = 0.1
 diameter_std2 = 15e-9

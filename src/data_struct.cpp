@@ -31,25 +31,25 @@ struct InputData {
     //!< Total number of particles to be generated.
 
     double q {-1.0}; 
-    //!< Charge of the particles.
+    //!< Charge of the particles. Integers of the elementary charge.
 
-    double z_start {150e-9}; 
-    //!< Height at which new particles are generated.
+    double z_start {500e-9}; 
+    //!< Initial height in m at which new particles are generated.
 
     double control_l {1.5e-6}; 
-    //!< Defines the simulation area in the x-y plane (control_^2).
+    //!< Defines side-length in m of the simulation area.
 
     double T {300.0}; 
-    //!< Temperature.
+    //!< Temperature in K.
 
     double diameter {30e-9}; 
-    //!< Particle (mean) diameter.
+    //!< Particle (mean) diameter in m.
 
     double dt {1e-9}; 
-    //!< Time step.
+    //!< Time step in s.
 
     double E0 {300e3}; 
-    //!< Strength of external electric field in the z-direction.
+    //!< Strength of external electric (V/m) field in the z-direction.
 
     double n_substrate {1.4585}; 
     //!< Refractive index of the substrate. Default: Silicon.
@@ -61,25 +61,25 @@ struct InputData {
     //!< Dynamic viscosity of the gas.
 
     double mfp {66.5e-9};
-    //!< particle mean free path.
+    //!< particle mean free path in m.
 
     double Xi {-2.2e-5}; 
     //!< The particle's magnetic susceptibility.
     
     double interaction_length {500e-9}; 
-    //!< Particle-particle forces are only calculated for distances below this value.
+    //!< Particle-particle forces are only calculated for distances below this value (m).
 
     double density {7874.0}; 
-    //!< Particle density. Default: Iron.
+    //!< Particle density in kg/m^3. Default: Iron.
 
     double m_saturation {1.707e6}; 
-    //!< Particle's (saturation) magnetization. Default: Iron (bulk).
+    //!< Particle's (saturation) magnetization in A/m. Default: Iron (bulk).
 
     double diameter_std {0.0}; 
-    //!< Standard deviation used for a log-norm distribution for diameters.
+    //!< Standard deviation used for a log-norm distribution for diameters (m).
 
     double diameter_std2 {0.0}; 
-    //!< Standard deviation used for a log-norm distribution for diameters of doubly charged particles.
+    //!< Standard deviation used for a log-norm distribution for diameters of doubly charged particles (m).
     
     double double_charge_fraction {0.0}; 
     //!< Fraction of particles with charge 2*q.
@@ -91,10 +91,10 @@ struct InputData {
     //!< Dielectric permittivities. 0 - vacuum, 1 - substrate, 2 - substrate, 3 - gas.
 
     vector3 B {0.0, 0.0, 0.0}; 
-    //!< External magnetic field.
+    //!< External magnetic field in T.
 
     vector3 v_g {0.0, 0.0, 0.0}; 
-    //!< Gas velocity.
+    //!< Gas velocity in m/s.
 
 
     bool print_trajectory {false}; 

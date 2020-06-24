@@ -36,7 +36,7 @@ using std::array;
 *
 * @brief Creates the InputReader object and reads input parameters from the file 'infile'. 
 *
-* First the default values for all variables are loaded. Then those values are overwritten with the
+* First, the default values for all variables are loaded. Then those values are overwritten, with the
 * corresponding values in the input file. Ignores lines beginning with '#'.
 *
 * @param infile Filename of the infile containing deposition parameters. Syntax must be 'key = value' 
@@ -131,7 +131,7 @@ void InputReader::Read_key(const string& key, const string& value){
     }else if(key=="n_gas"){
         try{ data.n_gas = check_pos(stod(value), key); }catch(...){ Add_error(key, value); }
 
-    }else if(key=="dynamic_viscocity"){ //is it the dynamic viscocity??
+    }else if(key=="dynamic_viscocity"){
         try{ data.eta_g = stod(value); }catch(...){ Add_error(key, value); }
 
     }else if(key=="mean_free_path"){
@@ -243,14 +243,14 @@ double InputReader::check_pos(double value, string key){
 *
 * @brief Reads already deposited particles from a file.
 *
-* The input file must have seven columns where each row corresponds to a particle. Elements 0-2 represent 
-* a particle's position, 3-5 its magnetization and element 6 its diameter.
+* The input file must have seven columns where each row corresponds to one particle. Elements 0-2 represent 
+* a particle's position, 3-5 its magnetization, and element 6 its diameter.
 *
 * @param filename The name of the file to be read.
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 *
 * @return A vector of arrays (length 7) where elements 0-2 represent a particle's position, 
-* 3-5 its magnetization and element 6 its diameter. 
+* 3-5 its magnetization, and element 6 its diameter. 
 *
 *********************************************************************************************************/
 vector<array<double, 7>> InputReader::Read_particles(string filename, std::ostream& os){

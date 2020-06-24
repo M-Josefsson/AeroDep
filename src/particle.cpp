@@ -175,7 +175,7 @@ void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
 * Checks if the Particle is within 'MIN_DIST' from the substrate or from another Particle. If it is, the
 * charge is removed if 'remove_surface_charge' is true.
 *
-* @return True is the particle has collided with something, otherwise false.
+* @return True if the Particle has collided with something, otherwise false.
 *
 *********************************************************************************************************/      
 bool Particle::Check_collision( const vector<Particle>& frozen_particles, 
@@ -229,11 +229,11 @@ bool Particle::Check_collision( const vector<Particle>& frozen_particles,
 
 /*****************************************************************************************************//**
 *
-* @brief Returns a character representative for the object the particle has collided with.
+* @brief Returns a character representative for the object the Particle has collided with.
 *
-* Does not check if the particle actually has collided or not.
+* Does not check if the Particle actually has collided or not.
 *
-* @return 'p' if the particle has collided with another particle and 's' if it has collided with the 
+* @return 'p' if the Particle has collided with another Particle and 's' if it has collided with the 
 * substrate.
 *
 *********************************************************************************************************/

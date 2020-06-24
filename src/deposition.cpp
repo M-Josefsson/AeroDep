@@ -273,7 +273,7 @@ double Deposition::Mobility(const double& d, const double& mfp, const double& Z)
 *
 * @brief Update the starting height for new particles.
 *
-* Udates the starting height of the particles such that it always is a+z_start_ where a is the center 
+* Updates the starting height of the particles such that it always is a+z_start_ where a is the center 
 * of the Particle with largest z-component. 
 *
 * @param os Ostream where output (only info) will be written. This is normally std::cout.

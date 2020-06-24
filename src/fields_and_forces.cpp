@@ -2,7 +2,7 @@
 * @file
 * 
 * @brief This file contains functions for calculating the two-particle forces and for calculating the 
-*  electric and magnetic fields around already deposited particles.
+* electric and magnetic fields around already deposited particles.
 *
 *********************************************************************************************************/
 
@@ -32,7 +32,7 @@ using std::vector;
 * @param data Data structure containing all the input and environment variables 
 * 
 * 
-* @return  The total force acting on the incoming particle
+* @return The total force acting on the incoming particle
 *
 *********************************************************************************************************/
 vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_particles, 
@@ -133,7 +133,7 @@ vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_part
 * The field is then given by
 * @image html E_field.png width=330px
 *
-* The notation can be found in Krinke et al.
+* The notation can be found in Krinke et al (2002).
 *
 * @param frozen_particle An already deposited particle.
 * @param p_to_p Vector pointing from the center of an incoming particle to the center of the frozen 
@@ -165,7 +165,7 @@ vector3 E_field_deposited_particle( const Particle& frozen_particle,
 /*****************************************************************************************************//**
 * @brief Calculates Jacobian of the electric field around a frozen particle.
 *
-* The jacobian is used in the first order term in the Taylor expansion of the electric field.
+* The Jacobian is used in the first order term in the Taylor expansion of the electric field.
 *
 * @param frozen_particle An already deposited particle.
 * @param p_to_p Vector pointing from the center of an incoming particle to the center of the frozen 
@@ -216,7 +216,7 @@ Jacobian Gradient_E_field_deposited_particle( const Particle& frozen_particle, c
 * The force is calculated assuming a conducting substrate and an incoming charge, which gives 
 * @image html F_image_PS.png width=230px
 *
-* The notation can be found in Krinke et al.
+* The notation can be found in Krinke et al (2002).
 *
 * @param p The incoming particle
 * @param eps Vector containing dielectric permittivities.
@@ -241,7 +241,7 @@ vector3 F_image_particle_substrate(const Particle& p, const array<double, 4>& ep
 * which gives the force
 * @image html F_image_PP.png width=650px
 *
-* The notation can be found in Krinke et al.
+* The notation can be found in Krinke et al (2002).
 *
 * @param p The incoming particle.
 * @param frozen_particle The frozen (already deposited) particle.
@@ -284,7 +284,7 @@ vector3 F_image_particle_particle( const Particle& p, const Particle& frozen_par
 * This provides the force
 * @image html F_dipole.png width=170px
 *
-* The notation can be found in Krinke et al.
+* The notation can be found in Krinke et al (2002).
 *
 * @param particle The incoming particle 
 * @param E_field Local electric field at the center of the incoming particle.
