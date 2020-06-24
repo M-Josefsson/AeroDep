@@ -383,7 +383,7 @@ int test_inputreader_default(){
     c += test_input(data.B[0], 0.0, "Bx");
     c += test_input(data.B[1], 0.0, "By");
     c += test_input(data.B[2], 0.0, "Bz");
-    c += test_input(data.z_start, 150e-9, "start_height");
+    c += test_input(data.z_start, 500e-9, "start_height");
     c += test_input(data.interaction_length, 0.5e-6, "interaction_length");
     c += test_input(data.alignment_field_strength, 1e-5, "alignment_field_strength");
     c += test_input(data.q, -1.0, "charge");
