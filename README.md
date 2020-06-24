@@ -96,7 +96,7 @@ Magnetism
 - ***magnetic*** include magnetic interactions? (true)
 - ***magnetic_type*** type of magnetic interaction to use in force calculations. Options are 'ferro' and 'para'. Default is 'ferro'.
 
-polydispersedisperse distribution(s)
+Polydisperse distribution(s)
 - ***diameter_std*** standard deviation in m for the diameter of the particles in a log-norm distribution (0.0)
 - ***diameter_std2*** standard deviation in m for the diameter of doubly charged particles in a log-norm distribution (0.0)
 - ***double_charge_fraction*** fraction of doubly charged particles (0.0)
@@ -131,7 +131,7 @@ A standard use case for AeroDep can be to study the self-assembly of ferromagnet
 
 As an example we will simulate the deposition of 30 nm Fe nanoparticles onto a substrate until we reach a concentration of 100 particles per μm2. For this example the external magnetic field (0.5 T) is taken to point up from the substrate. The substrate is assumed to be made of Silicon and the surrounding gas of Nitrogen. We take the starting height for new particles to be 500 nm above the current highest structure. The time step is set to 0.5 ns. All other variables take their default values (see [Infiles](#infiles)).     
 
-The infile one uses for this looks as follows
+The infile one uses for this can look as follows
 ```
 #General
 particle_number = 100
@@ -196,3 +196,34 @@ which first adds the particles in `particles_Bx` to the simulation volume before
 The output file `AeroDep/bin/particle_positions` will contain all 100 particles. If we plot them in the same way as before we get something similar to the plot below where more complex structures have been generated.
 
 ![](img/Example2.png)
+
+#### Example 3
+
+Here it will be shown how to use a different material than Fe and how to use polydisperse particle sizes.
+
+For this example we will generate 100 Ni particles. We will assume that the mean diameter is 40 nm and that the standard deviation of the particle sizes is 10 nm. Furthermore, we take 10% of the particles to be doubly charged and set the standard deviation of the doubly charged particles' diameter to 15 nm. The other parameters are the same as in example 1 above.
+
+The infile we use for this reads
+```
+#General
+particle_number = 100
+box_size = 1.0e-6
+dt = 5.0e-10
+start_height = 500e-9
+
+#Particle 
+diameter = 40e-9
+m_saturation = 0.485e6
+density = 8908
+
+#Magnetic
+Bz = 0.5
+
+#Polydisperse sizes
+diameter_std = 10e-9
+double_charge_fraction = 0.1
+diameter_std2 = 15e-9
+```  
+We then run AeroDep using this infile and plot the results, which can be seen below
+
+![](img/Example3.png) 
