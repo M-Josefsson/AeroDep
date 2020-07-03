@@ -45,7 +45,7 @@ struct InputData {
     double diameter {30e-9}; 
     //!< Particle (mean) diameter in m.
 
-    double dt {1e-9}; 
+    double dt {0.5e-9}; 
     //!< Time step in s.
 
     double E0 {300e3}; 
@@ -63,10 +63,10 @@ struct InputData {
     double mfp {66.5e-9};
     //!< particle mean free path in m.
 
-    double Xi {-2.2e-5}; 
+    double Xi {2.2e-5}; 
     //!< The particle's magnetic susceptibility.
     
-    double interaction_length {500e-9}; 
+    double interaction_length {1e-6}; 
     //!< Particle-particle forces are only calculated for distances below this value (m).
 
     double density {7874.0}; 

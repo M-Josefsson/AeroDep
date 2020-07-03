@@ -172,8 +172,8 @@ void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
 
 /*****************************************************************************************************//**
 *
-* Checks if the Particle is within 'MIN_DIST' from the substrate or from another Particle. If it is, the
-* charge is removed if 'remove_surface_charge' is true.
+* Checks if the Particle is within 'MIN_DIST' from the substrate or from another Particle (using periodic
+* boundary conditions). If it is, its charge is removed if 'remove_surface_charge' is true.
 *
 * @return True if the Particle has collided with something, otherwise false.
 *
