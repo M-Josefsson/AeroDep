@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/267559317.svg)](https://zenodo.org/badge/latestdoi/267559317)
+
 # AeroDep
 Molecular dynamics-type simulations of the deposition process of aerosol nanoparticles.
 
