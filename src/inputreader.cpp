@@ -217,7 +217,7 @@ void InputReader::Read_key(const string& key, const string& value){
 *********************************************************************************************************/
 void InputReader::Add_error(const string& key, const string& value){
 
-    errors += "Invalid value " + value + "for key " + key + "\n"; 
+    errors += "Invalid value " + value + " for key " + key + "\n"; 
     success = false;
     keys_read--;
 }
@@ -317,6 +317,10 @@ bool InputReader::To_bool(const string& str) {
 
     std::istringstream is(str_lower);
     bool b;
+
+    if (str_lower != "false" && str_lower != "true"){        
+        throw std::invalid_argument( str + " cannot be converted to a boolean value." );
+    }
 
     is >> std::boolalpha >> b;
     return b;
