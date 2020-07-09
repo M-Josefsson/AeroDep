@@ -135,13 +135,13 @@ bool Particle::Step_time( const InputData& data, const vector<Particle>& frozen_
     pos[2] = pos[2] + vel[2]/Beta*(1.0-eb)+(data.v_g[2] + F_ext[2]/(Bm)) * (data.dt-1.0/Beta*(1.0-eb)) + r[2]*sigma_frac + r[5]*sigma_sqrt;
 
     vel = v_new;            
-    Check_boundary_conditions(data.control_l, os);
+    Check_boundary_conditions(data.control_l, data.verbose, os);
 
     iteration++;
     if (iteration > MAX_ITER){
         return true;
     }else{ 
-        return Check_collision(frozen_particles, data.remove_surface_charge, data.control_l, os);
+        return Check_collision(frozen_particles, data.remove_surface_charge, data.control_l, data.verbose, os);
     }
 }
 
@@ -152,7 +152,7 @@ bool Particle::Step_time( const InputData& data, const vector<Particle>& frozen_
 * 2*z_start.
 *
 *********************************************************************************************************/
-void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
+void Particle::Check_boundary_conditions(const double& control_l, const bool verbose, ostream& os){
 
     for(int i=0; i<2; ++i){
 
@@ -165,7 +165,7 @@ void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
     }
     if(pos[2] > 2*z_start){
         pos[2] = z_start;
-        os << "z reset" << endl;
+        if (verbose) os << "z reset" << endl;
     }
 }
 
@@ -179,8 +179,8 @@ void Particle::Check_boundary_conditions(const double& control_l, ostream& os){
 *
 *********************************************************************************************************/      
 bool Particle::Check_collision( const vector<Particle>& frozen_particles, 
-                                const bool& remove_surface_charge, 
-                                const double& control_l, ostream& os){
+                                const bool& remove_surface_charge, const double& control_l, 
+                                const bool verbose, ostream& os){
 
     double dist;
     vector3 p_to_p{0.0, 0.0, 0.0}, frozen_pos{0.0, 0.0, 0.0};
@@ -204,8 +204,10 @@ bool Particle::Check_collision( const vector<Particle>& frozen_particles,
 
                         frozen = true;
                         collision_object = 'p';
-                        os << "Collided with a Particle - Distance between particles: " << dist << endl;
-                        os << "Steps: " << iteration << endl;
+                        if (verbose){
+                            os << "Collided with a Particle - Distance between particles: " << dist << endl;
+                            os << "Steps: " << iteration << endl;
+                        }
 
                         if(remove_surface_charge) q = 0;                        
                         return frozen;                        
@@ -219,8 +221,10 @@ bool Particle::Check_collision( const vector<Particle>& frozen_particles,
         pos[2] = diameter/2.0;
         frozen = true;
         collision_object = 's';
-        os << "Collided with the substrate - Distance to substrate : " << pos[2] << endl;
-        os << "Steps: " << iteration << endl;
+        if (verbose) {
+            os << "Collided with the substrate - Distance to substrate : " << pos[2] << endl;
+            os << "Steps: " << iteration << endl;    
+        }
 
         if(remove_surface_charge) q = 0;       
     }

@@ -104,7 +104,7 @@ void Deposition::Add_input_particles( const vector<array<double, 7>>& input_part
         P.q = q;
 
         frozen_particles.push_back(P);
-        Update_z_start(os);
+        Update_z_start(data.verbose, os);
     }
 }
 
@@ -141,7 +141,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
 
     //Create particle
     Particle P( z_start, diameter_new, data, r1, r3);
-    os << "Particle created" << endl;
+    if (data.verbose) os << "Particle created" << endl;
 
     //Perform the time evolution until collision.
     while(!collided){
@@ -167,7 +167,7 @@ bool Deposition::Add_particle(ostream& os, const InputData& data){
     }
 
     frozen_particles.push_back(P);
-    Update_z_start(os);
+    Update_z_start(data.verbose, os);
     
     return true;
 }
@@ -276,17 +276,18 @@ double Deposition::Mobility(const double& d, const double& mfp, const double& Z)
 * Updates the starting height of the particles such that it always is a+z_start_ where a is the center 
 * of the Particle with largest z-component. 
 *
+* @param verbose prints extra information if true
 * @param os Ostream where output (only info) will be written. This is normally std::cout.
 *
 *********************************************************************************************************/
-void Deposition::Update_z_start(ostream& os){
+void Deposition::Update_z_start(const bool verbose, ostream& os){
 
     Particle *Particle = &frozen_particles.back();
 
     if( (Particle->pos[2] + Particle->diameter/2.0) + z_start_original > z_start ){
 
         z_start = Particle->pos[2] + Particle->diameter/2.0 + z_start_original;
-        os << "new z_start = " << z_start << endl;
+        if (verbose) os << "new z_start = " << z_start << endl;
     }
 }
 
@@ -380,7 +381,7 @@ void Deposition::Finalize(ostream& os){
         }
     }
 
-    os << "Total number of particles: " << frozen_particles.size() << endl;
+    os << endl << "Total number of particles: " << frozen_particles.size() << endl;
     os << "Particles collided with substrate: " << s_count << endl;
     os << "Particles collided with other particle: " << p_count << endl;
 }

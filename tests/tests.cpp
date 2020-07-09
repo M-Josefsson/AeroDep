@@ -121,8 +121,6 @@ int test_F_image_particle_particle(const Particle& p_inc, const Particle& p2, co
 int test_F_vdW_particle_particle(const Particle& p_inc, const Particle& p2, const InputData& data){
     int c = 0;
     cout << "F_vdW_PP (1/2) ";
-    cout << "AH132 " << data.AH132 << endl;
-    cout << "AH232 " << data.AH232 << endl;
     arr p_to_p = p_inc.pos - p2.pos;
     double dist = norm(p_to_p);
     arr t = F_vdW_particle_particle(p_inc, p2, p_to_p, dist, data.AH232);
@@ -344,9 +342,10 @@ int test_inputreader_infile(){
     c += test_input(data.double_charge_fraction, 0.9, "double_charge_fraction");
 
     if(data.print_trajectory){ cout << "print_trajectory is true, expected false" << endl; c+=1; }
-    if(data.remove_surface_charge){ cout << "remove_surface_charge is true, expected false"<< endl; }
-    if(!data.calcMagnetic){ cout << "magnetic is false, expected true"<< endl; }
-    if(!data.magnetic_ferro){ cout << "magnetic_ferro is false, expected true"<< endl; }
+    if(data.remove_surface_charge){ cout << "remove_surface_charge is true, expected false"<< endl; c+=1; }
+    if(!data.verbose){ cout << "verbose is false, expected true" << endl; c += 1;}
+    if(!data.calcMagnetic){ cout << "magnetic is false, expected true"<< endl; c+=1; }
+    if(!data.magnetic_ferro){ cout << "magnetic_ferro is false, expected true"<< endl; c+=1; }
 
     cout << c << " errors found. " << endl;    
 
@@ -379,12 +378,12 @@ int test_inputreader_default(){
     c += test_input(data.diameter, 30e-9, "diameter");
     c += test_input(data.nbr_of_particles, 100, "nbr_of_particles");
     c += test_input(data.control_l, 1.5e-6, "box_size");
-    c += test_input(data.dt, 10e-10, "dt");
+    c += test_input(data.dt, 5e-10, "dt");
     c += test_input(data.B[0], 0.0, "Bx");
     c += test_input(data.B[1], 0.0, "By");
     c += test_input(data.B[2], 0.0, "Bz");
     c += test_input(data.z_start, 500e-9, "start_height");
-    c += test_input(data.interaction_length, 0.5e-6, "interaction_length");
+    c += test_input(data.interaction_length, 1e-6, "interaction_length");
     c += test_input(data.alignment_field_strength, 1e-5, "alignment_field_strength");
     c += test_input(data.q, -1.0, "charge");
     c += test_input(data.T, 300, "temperature");
@@ -392,7 +391,7 @@ int test_inputreader_default(){
     c += test_input(data.n_substrate, 1.4585, "n_substrate");
     c += test_input(data.n_gas, 1.0, "n_gas");
     c += test_input(data.mfp, 66.5e-9, "mean_free_path");
-    c += test_input(data.Xi, -2.2e-5, "particle_susceptibility");
+    c += test_input(data.Xi, 2.2e-5, "particle_susceptibility");
     c += test_input(data.density, 7874, "density");
     c += test_input(data.eps[1], 3.9, "dielectric_substrate");
     c += test_input(data.eps[3], 1.0, "dielectric_gas");
@@ -402,6 +401,7 @@ int test_inputreader_default(){
     c += test_input(data.double_charge_fraction, 0.0, "double_charge_fraction");
 
     if(data.print_trajectory){ cout << "print_trajectory is true, expected false" << endl; c += 1;}
+    if(data.verbose){ cout << "verbose is true, expected false" << endl; c += 1;}
     if(!data.remove_surface_charge){ cout << "remove_surface_charge is false, expected true"<< endl; c += 1;}
     if(!data.calcMagnetic){ cout << "magnetic is false, expected true"<< endl; c += 1;}
     if(!data.magnetic_ferro){ cout << "magnetic_ferro is false, expected true"<< endl;c += 1;}

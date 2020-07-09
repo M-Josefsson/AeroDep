@@ -52,9 +52,9 @@ private:
                                  const vector3& r, const double control_l);
 
     bool Check_collision( const vector<Particle>& frozen_particles, const bool& remove_surface_charge, 
-                          const double& control_l, ostream& os);
+                          const double& control_l, const bool verbose, ostream& os);
 
-    void Check_boundary_conditions(const double& control_l, ostream& os);
+    void Check_boundary_conditions(const double& control_l, const bool verbose, ostream& os);
     
     char collision_object;   
     //!< @brief 'p': particle-particle collision. 's': particle-substrate collision.

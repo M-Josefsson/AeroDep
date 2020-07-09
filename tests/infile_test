@@ -34,3 +34,5 @@ remove_surface_charge=false
 
 dielectric_substrate=4
 dielectric_gas=0.75
+
+verbose=True

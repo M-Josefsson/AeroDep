@@ -17,13 +17,14 @@ public:
     friend int test_deposition(Deposition deposition);
 
 private:
-    void Update_z_start(ostream& os);        
+    void Update_z_start(const bool verbose, ostream& os);        
     double Mobility(const double& d1, const double& mfp, const double& Z);
     double Double_charge_diameter(double diameter, double mfp);
     double Get_diameter(double& current_q, const double& double_charge_fraction);
     void print_trajectory(const std::vector<vector3>& Pos, const std::vector<vector3>& magnetization);
 
     Random distributions;
+     //!< @brief An instance of the Random class.
 
     std::vector<Particle> frozen_particles;
     //!< @brief Vector containing the frozen (already deposited) particles.

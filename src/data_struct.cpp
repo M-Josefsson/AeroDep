@@ -109,6 +109,9 @@ struct InputData {
     bool magnetic_ferro {true}; 
     //!< Use ferromagnetic force calculation? If false, paramagnetic force calculation is used.
 
+    bool verbose {false};
+    //!< Print verbose info?
+
     double AH131;
     //!< Hamaker constant of the substrate material.
 

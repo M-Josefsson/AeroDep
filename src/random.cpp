@@ -40,12 +40,12 @@ Random::Random(){
 *
 * @brief Sets the mean value and standard deviation of one of the two log-norm distributions used in the 
 * simulation.
-*
+* 
 * @param mean Logarithm of the mean value.
-* @param std Standard deviation
+* @param std Standard deviation.
 * @param option Determines which distribution to change. Alternatives are Random::CHARGE::SINGLE and
-* Random::CHARGE::DOUBLE. 
-*
+*  Random::CHARGE::DOUBLE. 
+* 
 * @param 
 *********************************************************************************************************/
 void Random::Setup_lognorm(const double mean, const double std, const int option){
@@ -104,10 +104,10 @@ void Random::Fill_uniform(vector3& r){
 *
 * The log-norm distributions are used for generating the diameters of particles. Both single and doubly
 * charged ones. The means and standard deviations are set up using Setup_lognorm().
-*
+* 
 * @param option Determines which log-norm distribution to use. Alternatives are Random::CHARGE::SINGLE 
 * and Random::CHARGE::DOUBLE.
-*.
+*
 *********************************************************************************************************/
 double Random::log_norm(int option){
     

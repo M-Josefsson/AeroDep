@@ -62,6 +62,7 @@ General
 - ***dt*** time step in s (0.5e-9)
 - ***interaction_length*** interactions between particles separated by more than this distance, given in m, are ignored (0.5e-6)
 - ***print_trajectory*** print trajectories for all particles? (false)
+- ***verbose*** print additional information? (false)
 
 ESP
 - ***temperature*** chamber/gas temperature in K (300)

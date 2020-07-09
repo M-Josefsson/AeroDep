@@ -61,11 +61,9 @@ InputReader::InputReader(const std::string infile, std::ostream& os){
 
     //Read keys from input file
     string line;
-
     while (getline(fin, line)){
 
         line.erase(std::remove_if (line.begin(), line.end(), ::isblank), line.end());        
-        std::for_each (line.begin(), line.end(), ::tolower);
         std::istringstream is_line(line);        
         string key;
 
@@ -187,6 +185,9 @@ void InputReader::Read_key(const string& key, const string& value){
 
     }else if(key=="remove_surface_charge"){
         try{ data.remove_surface_charge = To_bool(value); }catch(...){ Add_error(key, value); }
+
+    }else if(key=="verbose"){
+        try{ data.verbose = To_bool(value); }catch(...){ Add_error(key, value); }
 
     }else if(key=="magnetic"){
         try{ data.calcMagnetic = To_bool(value); }catch(...){ Add_error(key, value); }
@@ -310,7 +311,11 @@ vector<array<double, 7>> InputReader::Read_particles(string filename, std::ostre
 *********************************************************************************************************/
 bool InputReader::To_bool(const string& str) {
 
-    std::istringstream is(str);
+    string str_lower(str);
+    std::transform (str_lower.begin(), str_lower.end(), str_lower.begin(),
+                                [](unsigned char c) -> unsigned char { return std::tolower(c); });
+
+    std::istringstream is(str_lower);
     bool b;
 
     is >> std::boolalpha >> b;

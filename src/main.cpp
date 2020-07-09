@@ -79,12 +79,20 @@ int main(int argc, char *argv[]){
         }
         deposition.Add_input_particles(input_particles, data, os);
     }      
+
+    bool cont;
+    int nbr_print_progress = int(data.nbr_of_particles/10);
+    if (!data.verbose) os << "Progress:" << std::endl << "0%" << std::endl;
     
     //End of setup and start of the actual simulation
-    bool cont;
     for (int i=0; i<data.nbr_of_particles; ++i){
 
-        os << std::endl << i << std::endl;
+        if (data.verbose) {
+        	os << std::endl << "Nbr: " <<  i << std::endl;
+        } else {
+        	if ((i+1) % nbr_print_progress == 0) os << (i+1)/nbr_print_progress*10 << "%" << std::endl;
+        }
+        
         cont = deposition.Add_particle(os, data);    
 
         if (!cont) continue;
