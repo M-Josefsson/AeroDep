@@ -19,10 +19,10 @@ Molecular dynamics-type simulations of the deposition process of aerosol nanopar
 
 
 ### Overview
-This program performs molecular dynamics-type calculations in order to simulate the final steps of the deposition process of conductive (and magnetic) aerosol nanoparticles onto an substrate in an electrostatic percipitator (ESP). The particle concentration in the gas is assumed to be very low (<1e6 particles per cm3), such that particles in the gas do not interact, and only one particle is in the aerosol phase in the simulation volume at any given time. When the particle collides with the substrate, or another particle, its properties (such as position and magnetization)
+This program performs molecular dynamics-type calculations in order to simulate the final steps of the deposition process of conductive (and magnetic) aerosol nanoparticles onto a substrate in an electrostatic precipitator (ESP). The particle concentration in the gas is assumed to be very low (<1e6 particles per cm3), such that particles in the gas do not interact, and only one particle is in the aerosol phase in the simulation volume at any given time. When the particle collides with the substrate, or another particle, its properties (such as position and magnetization)
 are frozen, and a new particle is spawned.
 
-The calculations are based on numerically solving the Langevin equation describing the system in order to calculate trajectories for individual particles. The forces included are of electrostatic, magnetic, and van der Waals nature. Interactions between the frozen particles and the incoming particle are taken into account using pair-wise interactions. In addition, stochastic motion governed by Brownian motion is included as it has a significant effect on the particles' 
+The calculations are based on numerically solving the Langevin equation describing the system in order to calculate trajectories for individual particles. The forces included are of electrostatic, magnetic, and van der Waals nature. Interactions between the frozen particles and the incoming particle are taken into account using pair-wise interactions. In addition, stochastic motion governed by Brownian motion is included, as it has a significant effect on the particles' 
 trajectories for small nanoparticles.
 
 The core of the program builds upon the work in Krinke et al. "[Microscopic aspects of the deposition of nanoparticles from the gas phase](https://doi.org/10.1016/S0021-8502(02)00074-5)" Journal of Aerosol Science 33.10 (2002), but with added functionality (such as magnetism).
@@ -31,7 +31,7 @@ The integration scheme and Brownian motion treatment is described in Zarutskaya 
 
 
 ### Installation and requirements 
-The program is entirely run and installed using the command line. The only requirements for compiling the program is the `g++` compiler, as well as `make`. See the [GNU website](https://www.gnu.org) for more info on how to install them (for Windows it is recommended to use [minGW](http://mingw.org)).
+The program is entirely run and installed using the command line. The only requirements for compiling the program are the `g++` compiler, as well as `make`. See the [GNU website](https://www.gnu.org) for more info on how to install them (for Windows it is recommended to use [minGW](http://mingw.org)).
 
 For compilation `cd` to `AeroDep/src` and type 
 ```bash
@@ -44,7 +44,7 @@ AeroDep is run from `AeroDep/bin` by typing
 ```bash
 ./AeroDep [infile] [particle_file]
 ``` 
-where the commands in `[]` are optional. If no optional arguments are provided the program will execute using its default parameters (see [Infiles](#infiles)). The first optional argument is the file name of the input file containing the simulation parameters (see [Infiles](#infiles)). The second parameter is the file name for a file containing already deposited particles (e.g. an output file from a previous run). If the second option is provided, the particles specified in that file are added to the simulation volume as frozen particles before the simulation is executed.
+where the commands in `[]` are optional. If no optional arguments are provided, the program will execute using its default parameters (see [Infiles](#infiles)). The first optional argument is the file name of the input file containing the simulation parameters (see [Infiles](#infiles)). The second parameter is the file name for a file containing already deposited particles (e.g. an output file from a previous run). If the second option is provided, the particles specified in that file are added to the simulation volume as frozen particles before the simulation is executed.
 
 ### Infiles
 There are two kinds of input files to AeroDep: parameter input files and particle input files. The parameter input file contains the simulation specific parameters. The syntax in that file has to be `key = value`. Lines starting `#` are ignored, and all  spaces and tabs are always ignored. An example of the contents of a minimal infile is
@@ -53,7 +53,7 @@ particle_number = 10
 ```
 which sets the total number of particles to 10. All other parameters take their default values. For more examples see the provided example infile `AeroDep/bin/example_infile` and the [examples](#example-usage) below.
 
-All available keys are (default values within parenthesis):
+The available keys are (default values within parenthesis):
 
 General
 - ***particle_number*** total number of particles in the simulation (100)
@@ -102,7 +102,7 @@ Size distribution(s)
 - ***diameter_std2*** standard deviation in m for the diameter of doubly charged particles in a log-norm distribution (0.0)
 - ***double_charge_fraction*** fraction of doubly charged particles (0.0)
 
-Note on paramagnetism: this is an experimental feature based on "[Theoretical comparison of magnetic and hydrodynamic interactions between magnetically tagged particles in microfluidic systems](https://doi.org/10.1016/j.jmmm.2005.01.076)" Journal of Magnetism and Magnetic Materials 293.1 (2005), and as such it is *not* properly tested and cannot account for polydisperse particle sizes.   
+Note on paramagnetism: this is an experimental feature based on "[Theoretical comparison of magnetic and hydrodynamic interactions between magnetically tagged particles in microfluidic systems](https://doi.org/10.1016/j.jmmm.2005.01.076)" Journal of Magnetism and Magnetic Materials 293.1 (2005), and as such it is *not* properly tested and cannot account for polydisperse particle distribution.   
 
 The second kind of infile, the particle input file must have the same format as the particle output file described below.
 
@@ -112,7 +112,7 @@ The main result from running the AeroDep program is a file containing the positi
 
 Output file structure: each row corresponds to one particle. There are seven columns with data where column 1-3 is the particle's position, 4-6 its magnetization, and column 7 its diameter. 
 
-The second kind of output files the program can generate are files containing the trajectories of an individual particles. If the `print_trajectory` option is set to `true` one trajectory file is generated for each deposited particle. These files are written to `bin/trajectories` (this folder must exist!). Each row in the file corresponds to the current position (x,y and z coordinate).
+The second kind of output files the program can generate are files containing the trajectories of the individual particles. If the `print_trajectory` option is set to `true` one trajectory file is generated for each deposited particle. These files are written to `bin/trajectories` (this folder must exist!). Each row in the file corresponds to the current position (x, y and z coordinate).
 
 Note that periodic boundary conditions are used in the simulations, which sometimes results in trajectories leaving the simulation volume through one side only to immediately enter the volume again through the opposing side. The periodic boundary conditions can also affect the final particle positions where a particle on one boundary can collide with a particle on the opposing boundary.
 
@@ -130,7 +130,7 @@ The generated documentation is accessed by opening `AeroDep/docs/html/index.html
 
 #### Example 1
 
-The most basic use case for AeroDep is to simulate the deposition of negatively charged, nonmagnetic, nanoparticles in an ESP. As an example we will deposit 100 Au particles onto a 1.5x1.5 μm area on a Silicon substrate surrounded by Nitrogen gas. The particle size is set to 30 nm and the particles are assumed to lose their charge upon collision. For such a basic deposition, most of AeroDep's default parameter values will suffice and we only need to provide a few parameters in the infile. More specifically, we need to change the particle density to that of Au, and we need to turn off magnetic interactions.
+The most basic use case for AeroDep is to simulate the deposition of negatively charged, nonmagnetic, nanoparticles in an ESP. As an example we will deposit 100 Au particles onto a 1.5x1.5 μm area on a Silicon substrate surrounded by Nitrogen gas. The particle size is set to 30 nm and the particles are assumed to lose their charge upon collision. For such a basic deposition, most of AeroDep's default parameter values will suffice, and we only need to provide a few parameters in the infile. More specifically, we need to change the particle density to that of Au, and we need to turn off magnetic interactions.
 
 The infile we use for this reads
 ```
@@ -153,9 +153,9 @@ in `/AeroDep/bin`. This creates (or overwrites) the file `AeroDep/bin/particle_p
 
 #### Example 2
 
-Another standard use case for AeroDep can be to study the self-assembly of ferromagnetic nanoparticles under the influence of an external magnetic field. 
+Another standard use case for AeroDep is to study the self-assembly of ferromagnetic nanoparticles under the influence of an external magnetic field. 
 
-For this example we will simulate the deposition of 30 nm Fe nanoparticles onto a substrate until we reach a concentration of 100 particles per μm2. For this example the external magnetic field (0.5 T) is taken to point up from the substrate. The substrate is assumed to be made of Silicon and the surrounding gas of Nitrogen. We set the number of particle to 100 and the side-length of the simulation volume to 1 μm. All other variables take their default values since Fe is the default particle material (see [Infiles](#infiles)).     
+For this example we will simulate the deposition of 30 nm Fe nanoparticles onto a substrate until we reach a concentration of 100 particles per μm2. For this example, the external magnetic field (0.5 T) is taken to point up from the substrate. The substrate is assumed to be made of Silicon and the surrounding gas of Nitrogen. We set the number of particles to 100 and the side-length of the simulation volume to 1 μm. All other variables take their default values since Fe is the default particle material (see [Infiles](#infiles)).     
 
 The infile one uses for this can look as follows
 ```
@@ -183,11 +183,11 @@ Plotting the resulting particle positions yields plots like the one below where 
 
 #### Example 3
 
-A more complex deposition procedure can include first having the magnetic field pointing out of the plane (i.e. along z) when performing part of the deposition, and then turning the field to be oriented in the plane (e.g. along x) for the final part of the deposition.
+A more complex deposition procedure can include first having the magnetic field pointing out-of-plane (i.e. along z) when performing part of the deposition, and then turning the field to be oriented in-plane (e.g. along x) for the final part of the deposition.
 
-This can be simulated using AeroDep by running it twice where the output of the first run will act as input for the second run. We will show this by generating 50 particles when the field is out of plane, followed by 50 particles when the field is in plane.
+This can be simulated using AeroDep by running the program twice, where the output of the first run will act as input for the second run. We will show this by generating 50 particles when the field is out-of-plane, followed by 50 particles when the field is in-plane.
 
-For the first part we use the same infile as the previous example but set `particle_number = 50`. Then we run the first part using  
+For the first part, we use the same infile as the previous example but set `particle_number = 50`. We then run the first part using  
 ```
 ./AeroDep infile
 ```
@@ -213,7 +213,7 @@ AeroDep can now be run a second time using the particles in `particles_Bx` as th
 ```
 which first adds the particles in `particles_Bx` to the simulation volume before generating the final 50 particles. 
 
-The output file `AeroDep/bin/particle_positions` will contain all 100 particles. If we plot them in the same way as before we get something similar to the plot below where more complex structures have been generated.
+The output file `AeroDep/bin/particle_positions` will contain all 100 particles. If we plot them in the same way as before we get something similar to the plot below, where more complex structures have been generated.
 
 <p align="center">
   <img src="img/Example3.png" width="450" />
@@ -221,9 +221,9 @@ The output file `AeroDep/bin/particle_positions` will contain all 100 particles.
 
 #### Example 4
 
-Here it will be shown how to use a different material than Fe and how to include size distribution(s) for the generated particle.
+Here it will be shown how to use a different material than Fe and how to include a size distribution for the generated particles.
 
-For this example we will generate 100 Ni particles. We will assume that the mean diameter is 40 nm and that the standard deviation of the particle sizes is 10 nm. Furthermore, we take 10% of the particles to be doubly charged and set the standard deviation of the doubly charged particles' diameter to 15 nm. All particle material parameters are set to the respective values for Ni. The other parameters are the same as in example 2 above.
+For this example we will generate 100 Ni particles. We will assume that the mean diameter is 40 nm, and that the standard deviation of the particle sizes is 10 nm. Furthermore, we take 10% of the particles to be doubly charged and set the standard deviation of the doubly charged particles' diameter to 15 nm. All particle material parameters are set to the respective values for Ni. The other parameters are the same as in example 2 above.
 
 The infile we use for this reads
 ```
