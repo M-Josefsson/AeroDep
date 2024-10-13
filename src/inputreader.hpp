@@ -9,7 +9,7 @@
 
 class InputReader{
 public:
-    InputReader() {data.SetHamakerConstants();}
+    InputReader() {data.SetHamakerConstants(); data.normalizeGradB(); printf("Hello");}
     InputReader(const std::string infile, std::ostream& os);
 
     /*! @brief Returns True if no error were encountered when reading the files.

@@ -60,5 +60,5 @@ vector3 H_field_dipole( const Particle& frozen_particle,
                         const vector3& p_to_p, 
                         const double& dist);
 
-vector3 F_ext_B_grad(const Particle& p, const vector3& dB);
+vector3 F_ext_B_grad(const Particle& p, const vector3& dB, const double dB_mag);
 #endif

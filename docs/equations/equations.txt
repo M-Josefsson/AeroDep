@@ -21,6 +21,4 @@
 
 \mathbf{F}=\nabla (\mathbf{m}\cdot\mathbf{B})
 
-B_x=B_{0,x} + dB_xx+dB_yy+dB_zz,\\
-B_y=B_{0,y} + dB_xx+dB_yy+dB_zz,\\
-B_z=B_{0,z} + dB_xx+dB_yy+dB_zz
+B(\mathbf{r})=B_0 + dB_{mag}(\mathbf{r}\cdot \mathbf{n})\mathbf{n}

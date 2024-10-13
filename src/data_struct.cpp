@@ -94,7 +94,10 @@ struct InputData {
     //!< External magnetic field in T.
 
     vector3 dB {0.0, 0.0, 0.0};
-    //!< Linear change in magnetic field strangth (T/m).
+    //!< Direction for the linear change in magnetic. Will be normalized internally. Dimensionless.
+
+    double dB_mag = 0.0;
+    //!< Change in magnetic field strength (T/m).
 
     vector3 v_g {0.0, 0.0, 0.0}; 
     //!< Gas velocity in m/s.
@@ -137,6 +140,20 @@ struct InputData {
         AH131 = 3.0/4.0*KB*T*pow((eps[1] - eps[3])/(eps[1] + eps[3]), 2) + 
                         3.0*H*NU/(16.0*sqrt(2.0))* pow(n1*n1 - n3*n3, 2)/pow(n1*n1 + n3*n3, 3.0/2.0);    
         AH132 = sqrt(AH232*AH131); 
+    }
+
+    void normalizeGradB() {
+        bool normalize = false;
+        normalize |= fabs(dB[0]) > 1e-12;
+        normalize |= fabs(dB[1]) > 1e-12;
+        normalize |= fabs(dB[2]) > 1e-12;
+
+        if (normalize) {
+            double len = 1/sqrt(dB[0]*dB[0] + dB[1]*dB[1] + dB[2]*dB[2]);
+            dB[0] = dB[0] * len;
+            dB[1] = dB[1] * len;
+            dB[2] = dB[2] * len;
+        }
     }
 };
 

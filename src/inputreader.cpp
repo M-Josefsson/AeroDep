@@ -86,6 +86,7 @@ InputReader::InputReader(const std::string infile, std::ostream& os){
     os << errors << endl;
 
     data.SetHamakerConstants();
+    data.normalizeGradB();
 }
 
 
@@ -173,6 +174,9 @@ void InputReader::Read_key(const string& key, const string& value){
 
     }else if(key=="dBz"){
         try{ data.dB[2] = stod(value); }catch(...){ Add_error(key, value); }
+
+    }else if(key=="dB_mag"){
+        try{ data.dB_mag = stod(value); }catch(...){ Add_error(key, value); }
 
     }else if(key=="m_saturation"){
         try{ data.m_saturation = stod(value); }catch(...){ Add_error(key, value); }

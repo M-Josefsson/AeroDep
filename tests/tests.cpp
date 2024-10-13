@@ -266,19 +266,37 @@ int test_F_grad_B(Particle& p, InputData& data) {
     int c = 0;
     data.B[2] = 0.6;
 
-    cout << "F_grad_B (1/4): ";
-    arr t = F_ext_B_grad(p, data.dB);
+    cout << "F_grad_B (1/5): ";
+    arr t = F_ext_B_grad(p, data.dB, data.dB_mag);
     c += !test_close_arr({0.0, 0.0, 0}, t);
 
-    cout << "F_grad_B (1/4): ";
-    data.dB[2] = 100;
-    t = F_ext_B_grad(p, data.dB);
+    cout << "F_grad_B (2/5): ";
+    data.dB[2] = 1;
+    data.dB_mag = 100;
+    data.normalizeGradB();
+    t = F_ext_B_grad(p, data.dB, data.dB_mag);
     c += !test_close_arr({0.0, 0.0, 2.42169669701969069e-15}, t);
 
-    cout << "F_grad_B (1/4): ";
-    data.dB = {10, 10, 10};
-    t = F_ext_B_grad(p, data.dB);
-    c += !test_close_arr({2.42169669701969069e-16, 2.42169669701969069e-16, 2.42169669701969069e-16}, t);
+    cout << "F_grad_B (3/5): ";
+    data.dB_mag = -5;
+    data.dB = {0, 0, 1};
+    data.normalizeGradB();
+    t = F_ext_B_grad(p, data.dB, data.dB_mag);
+    c += !test_close_arr({0.0, 0.0, -1.21084834850984549e-16}, t);
+
+    cout << "F_grad_B (4/5): ";
+    data.dB_mag = -7;
+    data.dB = {1, 0.5, 5};
+    data.normalizeGradB();
+    t = F_ext_B_grad(p, data.dB, data.dB_mag);
+    c += !test_close_arr({-3.22892892935958855e-17, -1.61446446467979428e-17, -1.6144644646797944e-16}, t);
+
+    cout << "F_grad_B (5/5): ";
+    data.dB_mag = 10;
+    data.dB = {1, 1, 1};
+    data.normalizeGradB();
+    t = F_ext_B_grad(p, data.dB, data.dB_mag);
+    c += !test_close_arr({8.07232232339897077e-17, 8.072322323398972e-17, 8.072322323398972e-17}, t);
 
     return c;
 }
@@ -288,7 +306,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     cout << "Total_force (1/4): ";
     vector<Particle> fp;
     arr t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({2.42169669701969098e-16, 2.42169669701969098e-16, -5.4947481622129228e-14}, t);
+    c += !test_close_arr({8.07232232339897077e-17, 8.072322323398972e-17, -5.51089280685972068e-14}, t);
 
     cout << "Total_force (2/4): ";
     fp.push_back(p2);
@@ -507,6 +525,7 @@ int main(){
     cout.precision(18);
     InputData data;
     data.SetHamakerConstants();
+    data.normalizeGradB();
     data.alignment_field_strength = 1e10;
     data.density = 7310.0;
     data.m_saturation = 1.713e6;

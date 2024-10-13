@@ -23,8 +23,9 @@ using std::vector;
 /*****************************************************************************************************//**
 * @brief Returns the external magnetic field at position pos.
 * The field is given by:
-* @image html B_ext.png width=270px
-*
+* @image html B_ext.png width=240px
+* where n is a normalized vector along which the field changes, 
+* and dB_mag is the rate of change(T/m).
 * @param pos  position
 * @param data struct containing B and dB
 * 
@@ -33,10 +34,7 @@ using std::vector;
 *********************************************************************************************************/
 static inline vector3 get_B_ext(const vector3& pos, const InputData& data) {
     vector3 ret = data.B;
-    double dB = data.dB[0] * pos[0] + data.dB[1] * pos[1] + data.dB[2] * pos[2];
-    ret[0] += dB;
-    ret[1] += dB;
-    ret[2] += dB;
+    ret = ret + data.dB * dot(pos, data.dB);
     return ret;
 }
 
@@ -127,7 +125,7 @@ vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_part
         F_ext = F_ext + crossproduct(particle.vel, B)*(particle.q*ELEM);
 
         //Magnetic moment in in-homogeneous magnetic field
-        F_ext = F_ext + F_ext_B_grad(particle, data.dB);
+        F_ext = F_ext + F_ext_B_grad(particle, data.dB, data.dB_mag);
 
         if (data.magnetic_ferro){
             
@@ -504,18 +502,21 @@ vector3 H_field_dipole(const Particle& frozen_particle, const vector3& p_to_p, c
 
 * The magnetic field is assumed to change linearly along the vector dB, and the
 * total magnetic field is thus 
-* @image html B_ext.png width=270px
+* @image html B_ext.png width=200px
 *
 * @param p  The particle.
-* @param dB Vector along which the B-field strength increases.
+* @param dB Normalized vector along which the B-field strength increases.
+* @param dB_mag Rate of change (T/m) of the changing B-field (can be negative).
 *
 * @return The force on a magnetic moment in a changing magnetic field.
 *
 *********************************************************************************************************/
-vector3 F_ext_B_grad(const Particle& p, const vector3& dB) {
-    Jacobian gradB = {dB[0], dB[1], dB[2],
-                      dB[0], dB[1], dB[2],
-                      dB[0], dB[1], dB[2]};
+vector3 F_ext_B_grad(const Particle& p, const vector3& dB, const double dB_mag) {
+
+    double k = dB_mag;
+    Jacobian gradB = {k*dB[0]*dB[0], k*dB[0]*dB[1], k*dB[0]*dB[2],
+                      k*dB[0]*dB[1], k*dB[1]*dB[1], k*dB[1]*dB[2],
+                      k*dB[0]*dB[2],  k*dB[2]*dB[1], k*dB[2]*dB[2]};
 
     const vector3 m = p.magnetization * p.V;
     vector3 ret;

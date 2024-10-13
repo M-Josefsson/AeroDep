@@ -92,12 +92,13 @@ Gas
 - ***dynamic_viscosity*** dynamic viscosity of the gas in kg/m/s (18.13e-6 N2)
 
 Magnetism
-- ***Bx*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, x-component (0.0)
-- ***By*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, y-component (0.0)
-- ***Bz*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, z-component (0.0)
-- ***dBx*** change of external magnetic field strength along the x-direction in T/m (0.0)
-- ***dBy*** change of external magnetic field strength along the y-direction in T/m (0.0)
-- ***dBz*** change of external magnetic field strength along the z-direction in T/m (0.0)
+- ***Bx*** static external magnetic field (B-field), given in T, x-component (0.0)
+- ***By*** static external magnetic field (B-field), given in T, y-component (0.0)
+- ***Bz*** static external magnetic field (B-field), given in T, z-component (0.0)
+- ***dBx*** x-component of the vector pointing along a linearly changing B-field
+- ***dBy*** y-component of the vector pointing along a linearly changing B-field
+- ***dBz*** z-component of the vector pointing along a linearly changing B-field
+- ***dB_mag*** rate of change of dB (T/m). After dB(r) is normalized interally the variable B-field is dB_mag * dB
 - ***alignment_field_strength*** local H-field strength above which a particle's magnetization is aligned with the field (1e-5)
 - ***magnetic*** include magnetic interactions? (true)
 - ***magnetic_type*** type of magnetic interaction to use in force calculations. Options are `ferro` and `para`. Default is `ferro`.
