@@ -5,6 +5,7 @@
 #include "data_struct.cpp"
 
 #include <vector>
+#include <iostream>
 
 using std::vector;
 using std::ostream;

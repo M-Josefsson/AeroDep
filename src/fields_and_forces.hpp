@@ -58,5 +58,7 @@ vector3 F_paramagnetic( const Particle& p,
                                         
 vector3 H_field_dipole( const Particle& frozen_particle, 
                         const vector3& p_to_p, 
-                        const double& dist);  
+                        const double& dist);
+
+vector3 F_ext_B_grad(const Particle& p, const vector3& dB);
 #endif

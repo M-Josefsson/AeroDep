@@ -18,3 +18,9 @@
 \mathbf{F}(\mathbf{r})=\frac{3\mu_0}{4\pi|\bar{r}|^5}\left( (\mathbf{m_p}\cdot\mathbf{\bar{r}})\mathbf{m} + (\mathbf{m}\cdot\mathbf{\bar{r}})\mathbf{m_p} + (\mathbf{m_p}\cdot\mathbf{m})\mathbf{\bar{r}} -\frac{5(\mathbf{m_p}\cdot\mathbf{\bar{r}})(\mathbf{m}\cdot\mathbf{\bar{r}})}{|\bar{r}|^2}\mathbf{\bar{r}} \right ),\ \ \mathbf{\bar{r}}=\mathbf{r_1}-\mathbf{r_2}
 
 \mathbf{H}_{\text{dipole}}(\mathbf{r})=\frac{1}{4\pi}\left ( \frac{3\mathbf{r}(\mathbf{r}\cdot\mathbf{m})}{|r|^5}-\frac{\mathbf{m}}{|r|^3}\right )
+
+\mathbf{F}=\nabla (\mathbf{m}\cdot\mathbf{B})
+
+B_x=B_{0,x} + dB_xx+dB_yy+dB_zz,\\
+B_y=B_{0,y} + dB_xx+dB_yy+dB_zz,\\
+B_z=B_{0,z} + dB_xx+dB_yy+dB_zz

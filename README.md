@@ -92,9 +92,12 @@ Gas
 - ***dynamic_viscosity*** dynamic viscosity of the gas in kg/m/s (18.13e-6 N2)
 
 Magnetism
-- ***Bx*** external magnetic field (B-field) in T, x-component (0.0)
-- ***By*** external magnetic field (B-field) in T, y-component (0.0)
-- ***Bz*** external magnetic field (B-field) in T, z-component (0.0)
+- ***Bx*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, x-component (0.0)
+- ***By*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, y-component (0.0)
+- ***Bz*** external magnetic field (B-field) at {x,y,z}={0,0,0}, given in T, z-component (0.0)
+- ***dBx*** change of external magnetic field strength along the x-direction in T/m (0.0)
+- ***dBy*** change of external magnetic field strength along the y-direction in T/m (0.0)
+- ***dBz*** change of external magnetic field strength along the z-direction in T/m (0.0)
 - ***alignment_field_strength*** local H-field strength above which a particle's magnetization is aligned with the field (1e-5)
 - ***magnetic*** include magnetic interactions? (true)
 - ***magnetic_type*** type of magnetic interaction to use in force calculations. Options are `ferro` and `para`. Default is `ferro`.
@@ -103,8 +106,8 @@ Size distribution(s)
 - ***diameter_std*** standard deviation in m for the diameter of the particles in a log-norm distribution (0.0)
 - ***diameter_std2*** standard deviation in m for the diameter of doubly charged particles in a log-norm distribution (0.0)
 - ***double_charge_fraction*** fraction of doubly charged particles (0.0)
-
-Note on paramagnetism: this is an experimental feature based on "[Theoretical comparison of magnetic and hydrodynamic interactions between magnetically tagged particles in microfluidic systems](https://doi.org/10.1016/j.jmmm.2005.01.076)" Journal of Magnetism and Magnetic Materials 293.1 (2005), and as such it is *not* properly tested and cannot account for polydisperse particle distribution.   
+<!-- k -->
+Note on paramagnetism: this is an experimental feature based on "[Theoretical comparison of magnetic and hydrodynamic interactions between magnetically tagged particles in microfluidic systems](https://doi.org/10.1016/j.jmmm.2005.01.076)" Journal of Magnetism and Magnetic Materials 293.1 (2005), and as such it is *not* properly tested and cannot account for polydisperse particle distribution. Variations in the external magnetic field are not taken into account when evaluating the force between paramagnetic particles, i.e. it's assumed that dB=0.
 
 The second kind of infile, the particle input file must have the same format as the particle output file described below.
 

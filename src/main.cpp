@@ -90,9 +90,10 @@ int main(int argc, char *argv[]){
         if (data.verbose) {
         	os << std::endl << "Nbr: " <<  i << std::endl;
         } else {
-        	if ((i+1) % nbr_print_progress == 0) os << (i+1)/nbr_print_progress*10 << "%" << std::endl;
+        	if (data.nbr_of_particles > 10 && ((i+1) % nbr_print_progress == 0)) {
+                os << (i+1)/nbr_print_progress*10 << "%" << std::endl;
+            }
         }
-        
         cont = deposition.Add_particle(os, data);    
 
         if (!cont) continue;

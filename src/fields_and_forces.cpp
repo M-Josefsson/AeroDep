@@ -21,6 +21,26 @@
 using std::vector;
 
 /*****************************************************************************************************//**
+* @brief Returns the external magnetic field at position pos.
+* The field is given by:
+* @image html B_ext.png width=270px
+*
+* @param pos  position
+* @param data struct containing B and dB
+* 
+* @return The external magnetic field.
+*
+*********************************************************************************************************/
+static inline vector3 get_B_ext(const vector3& pos, const InputData& data) {
+    vector3 ret = data.B;
+    double dB = data.dB[0] * pos[0] + data.dB[1] * pos[1] + data.dB[2] * pos[2];
+    ret[0] += dB;
+    ret[1] += dB;
+    ret[2] += dB;
+    return ret;
+}
+
+/*****************************************************************************************************//**
 * @brief Returns the total external force acting on the particle.
 *
 * The total force includes all two particle forces and all forces between the incoming particle and 
@@ -37,7 +57,6 @@ using std::vector;
 *********************************************************************************************************/
 vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_particles, 
                          const InputData& data){
-
     Jacobian gradient_E_field;
     gradient_E_field.fill(0.0);
     vector3 E_field{0.0, 0.0, data.E0}, H_field_dipoles{0.0, 0.0, 0.0}, F_ext{0.0, 0.0, 0.0};    
@@ -84,8 +103,7 @@ vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_part
                             F_ext = F_ext + F_ferromagnetic_dipole_dipole(particle, frozen_particle, p_to_p, dist);  
 
                         }else{
-                            F_ext = F_ext + F_paramagnetic(particle, p_to_p, dist, data.B);                                    
-                          
+                            F_ext = F_ext + F_paramagnetic(particle, p_to_p, dist, data.B);
                         }
                     }                                    
                 }            
@@ -100,27 +118,31 @@ vector3 Get_total_force( Particle& particle, const vector<Particle>& frozen_part
     
     //Particle-substrate forces
     F_ext = F_ext + F_image_particle_substrate(particle, data.eps);
-    F_ext = F_ext + F_vdW_particle_substrate(particle, data.AH132); 
+    F_ext = F_ext + F_vdW_particle_substrate(particle, data.AH132);
     
     if (data.calcMagnetic){
 
+        vector3 B = get_B_ext(particle.pos, data);
         //Magnetic field contribution to Lorentz force
-        F_ext = F_ext + crossproduct(particle.vel, data.B)*(particle.q*ELEM); 
+        F_ext = F_ext + crossproduct(particle.vel, B)*(particle.q*ELEM);
+
+        //Magnetic moment in in-homogeneous magnetic field
+        F_ext = F_ext + F_ext_B_grad(particle, data.dB);
 
         if (data.magnetic_ferro){
             
-            vector3 H_tot{0.0, 0.0, 0.0};
+            vector3 H_tot = {};
 
-            for (size_t i=0; i<3; ++i){                
-                H_tot[i] = data.B[i]/MU0 + H_field_dipoles[i];                            
+            for (size_t i=0; i<3; ++i){
+                H_tot[i] = B[i]/MU0 + H_field_dipoles[i];
             }
 
-            double H_norm = norm(H_tot);       
+            double H_norm = norm(H_tot);
 
-            if (H_norm > data.alignment_field_strength){                         
-                particle.magnetization = H_tot / H_norm * data.m_saturation; 
+            if (H_norm > data.alignment_field_strength){
+                particle.magnetization = H_tot / H_norm * data.m_saturation;
             }
-        }              
+        }
     }
     return F_ext;
 }
@@ -473,4 +495,32 @@ vector3 H_field_dipole(const Particle& frozen_particle, const vector3& p_to_p, c
     H_field = H_field * frozen_particle.V / (4.0*PI*pow(dist, 3) );
 
     return H_field;
+}
+
+/*****************************************************************************************************//**
+*
+* @brief Calculates the force on a magnetic moment in an inhomogeneous magnetic field.
+* @image html F_gradB.png width=270p on
+
+* The magnetic field is assumed to change linearly along the vector dB, and the
+* total magnetic field is thus 
+* @image html B_ext.png width=270px
+*
+* @param p  The particle.
+* @param dB Vector along which the B-field strength increases.
+*
+* @return The force on a magnetic moment in a changing magnetic field.
+*
+*********************************************************************************************************/
+vector3 F_ext_B_grad(const Particle& p, const vector3& dB) {
+    Jacobian gradB = {dB[0], dB[1], dB[2],
+                      dB[0], dB[1], dB[2],
+                      dB[0], dB[1], dB[2]};
+
+    const vector3 m = p.magnetization * p.V;
+    vector3 ret;
+    ret[0] = m[0]*gradB[0] + m[1]*gradB[3] + m[2]*gradB[6];
+    ret[1] = m[0]*gradB[1] + m[1]*gradB[4] + m[2]*gradB[7];
+    ret[2] = m[0]*gradB[2] + m[1]*gradB[5] + m[2]*gradB[8];
+    return ret;
 }

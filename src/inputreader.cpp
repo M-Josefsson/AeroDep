@@ -165,6 +165,15 @@ void InputReader::Read_key(const string& key, const string& value){
     }else if(key=="Bz"){
         try{ data.B[2] = stod(value); }catch(...){ Add_error(key, value); }
 
+    }else if(key=="dBx"){
+        try{ data.dB[0] = stod(value); }catch(...){ Add_error(key, value); }
+
+    }else if(key=="dBy"){
+        try{ data.dB[1] = stod(value); }catch(...){ Add_error(key, value); }
+
+    }else if(key=="dBz"){
+        try{ data.dB[2] = stod(value); }catch(...){ Add_error(key, value); }
+
     }else if(key=="m_saturation"){
         try{ data.m_saturation = stod(value); }catch(...){ Add_error(key, value); }
 
@@ -204,7 +213,7 @@ void InputReader::Read_key(const string& key, const string& value){
     }else{
       errors += "Unknown key or value " + key + "," + value + "\n";
       keys_read--;
-    }    
+    }
 }
 
 

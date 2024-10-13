@@ -93,9 +93,11 @@ struct InputData {
     vector3 B {0.0, 0.0, 0.0}; 
     //!< External magnetic field in T.
 
+    vector3 dB {0.0, 0.0, 0.0};
+    //!< Linear change in magnetic field strangth (T/m).
+
     vector3 v_g {0.0, 0.0, 0.0}; 
     //!< Gas velocity in m/s.
-
 
     bool print_trajectory {false}; 
     //!< Print trajectories for every particle?

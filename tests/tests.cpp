@@ -262,13 +262,33 @@ int test_F_dipole(const Particle& p_inc, const Particle& p2, const InputData& da
     return c;
 }
 
+int test_F_grad_B(Particle& p, InputData& data) {
+    int c = 0;
+    data.B[2] = 0.6;
+
+    cout << "F_grad_B (1/4): ";
+    arr t = F_ext_B_grad(p, data.dB);
+    c += !test_close_arr({0.0, 0.0, 0}, t);
+
+    cout << "F_grad_B (1/4): ";
+    data.dB[2] = 100;
+    t = F_ext_B_grad(p, data.dB);
+    c += !test_close_arr({0.0, 0.0, 2.42169669701969069e-15}, t);
+
+    cout << "F_grad_B (1/4): ";
+    data.dB = {10, 10, 10};
+    t = F_ext_B_grad(p, data.dB);
+    c += !test_close_arr({2.42169669701969069e-16, 2.42169669701969069e-16, 2.42169669701969069e-16}, t);
+
+    return c;
+}
 
 int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
     int c = 0;
     cout << "Total_force (1/4): ";
     vector<Particle> fp;
     arr t = Get_total_force(p_inc, fp, data);
-    c += !test_close_arr({0.0, 0.0, -5.51896512918311993e-14}, t);
+    c += !test_close_arr({2.42169669701969098e-16, 2.42169669701969098e-16, -5.4947481622129228e-14}, t);
 
     cout << "Total_force (2/4): ";
     fp.push_back(p2);
@@ -288,6 +308,7 @@ int test_total_force(Particle& p_inc, const Particle& p2, InputData& data){
 
     cout << "Total_force (4/4): ";
     data.calcMagnetic = true;
+    data.dB = {};
     t = Get_total_force(p_inc, fp, data);
     c += !test_close_arr({-4.54630997167884765e-13, -1.18157427159361326e-13, -1.61999972162395245e-11}, t);
 
@@ -323,6 +344,9 @@ int test_inputreader_infile(){
     c += test_input(data.B[0], 0.1, "Bx");
     c += test_input(data.B[1], 0.2, "By");
     c += test_input(data.B[2], 0.3, "Bz");
+    c += test_input(data.B[0], 0.1, "dBx");
+    c += test_input(data.B[1], 0.2, "dBy");
+    c += test_input(data.B[2], 0.3, "dBz");
     c += test_input(data.z_start, 5.4e-7, "start_height");
     c += test_input(data.interaction_length, 0.8e-6, "interaction_length");
     c += test_input(data.alignment_field_strength, 1e-5, "alignment_field_strength");
@@ -516,7 +540,8 @@ int main(){
     nbr_errors += test_F_ferro(p_inc, p2, data);
     nbr_errors += test_E_field_gradient(p_inc, p2, data);
     nbr_errors += test_F_dipole(p_inc, p2, data);
-    nbr_errors += test_total_force( p_inc, p2, data);
+    nbr_errors += test_F_grad_B(p_inc, data);
+    nbr_errors += test_total_force(p_inc, p2, data);
     //Test paramagnetic
 
     //Test time step
