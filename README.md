@@ -95,10 +95,11 @@ Magnetism
 - ***Bx*** static external magnetic field (B-field), given in T, x-component (0.0)
 - ***By*** static external magnetic field (B-field), given in T, y-component (0.0)
 - ***Bz*** static external magnetic field (B-field), given in T, z-component (0.0)
-- ***dBx*** x-component of the vector pointing along a linearly changing B-field
-- ***dBy*** y-component of the vector pointing along a linearly changing B-field
-- ***dBz*** z-component of the vector pointing along a linearly changing B-field
-- ***dB_mag*** rate of change of dB (T/m). After dB(r) is normalized interally the variable B-field is dB_mag * dB
+- ***dBx*** x-component of the vector pointing along a linearly changing B-field (0.0)
+- ***dBy*** y-component of the vector pointing along a linearly changing B-field (0.0)
+- ***dBz*** z-component of the vector pointing along a linearly changing B-field (0.0)
+ Note: dB(r) will be normalized by AeroDep
+- ***dB_mag*** rate of change of dB(r) in T/m (0.0)
 - ***alignment_field_strength*** local H-field strength above which a particle's magnetization is aligned with the field (1e-5)
 - ***magnetic*** include magnetic interactions? (true)
 - ***magnetic_type*** type of magnetic interaction to use in force calculations. Options are `ferro` and `para`. Default is `ferro`.
